@@ -49,3 +49,15 @@ class AverageOfSubarrayOfSizeK {
 - See the image below:
 
 ![alt text](https://github.com/eyc94/Grokking/blob/master/images/sliding_window_one.png 'Sliding Window Opimization Example')
+
+- As shown, we see there are 4 overlapping elements.
+    - First subarray is from index 0 - 4.
+    - Second subarray is from index 1 - 5.
+- Can we reuse the `sum` we have calculated for the overlapping elements?
+- Visualize a sliding window of 5 elements that is the contiguous subarray.
+- When we move to the next subarray, we slide the window by 1 element.
+    - We subtract the element going out of the window.
+    - We add the element coming into the window.
+- The time complexity would result `O(N)`.
+
+![alt text](https://github.com/eyc94/Grokking/blob/master/images/sliding_window_two.png 'Sliding Window One Step Forward')

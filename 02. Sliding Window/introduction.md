@@ -46,3 +46,6 @@ class AverageOfSubarrayOfSizeK {
     - Since for every element of the input array, we are calculating the sum of its next 'K' elements, the time complexity of the above algorithm will be `O(N * K)` where 'N' is the length of the input array and 'K' is the length of contiguous subarray.
 - Is there a better solution?
 - Current solution is inefficient because for any two consecutive subarrays of size '5', the overlapping part (4 elements) will be evaluated twice.
+- See the image below:
+
+![alt text](https://github.com/eyc94/Grokking/blob/master/images/sliding_window_one.png 'Sliding Window Opimization Example')

@@ -61,3 +61,34 @@ class AverageOfSubarrayOfSizeK {
 - The time complexity would result `O(N)`.
 
 ![alt text](https://github.com/eyc94/Grokking/blob/master/images/sliding_window_two.png 'Sliding Window One Step Forward')
+
+- Algorithm for `Sliding Window` approach:
+```java
+import java.util.Arrays;
+
+class AverageOfSubarrayOfSizeK {
+    public static double[] findAverages(int K, int[] arr) {
+        double[] result = new double[arr.length - K + 1];
+        double windowSum = 0;
+        int windowStart = 0;
+        for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+            windowSum += arr[windowEnd]; // Add the next element.
+            // Slide the window. We do not need to slide if we have not hit the required since size of 'K'.
+            if (windowEnd >= K - 1) {
+                result[windowStart] = windowSum / K; // Calculate the average.
+                windowSum -= arr[windowStart]; // Subtract the element going out.
+                windowStart++; // Slide the window ahead.
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] sample = new int[] { 1, 3, 2, 6, -1, 4, 1, 8, 2 };
+        double[] result = findAverages(5, sample);
+        System.out.println("Averages of subarrays of size K: " + Arrays.toString(result));
+    }
+}
+```
+- In some problems, size of sliding window is not fixed.
+- Expand or shrink window based on problem constraints.

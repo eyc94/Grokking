@@ -56,6 +56,7 @@ public class SmallestSubarrayWithAGivenSum {
         int r1 = findMinSubArray(7, s1);
         int r2 = findMinSubArray(7, s2);
         int r3 = findMinSubArray(8, s3);
+        int r4 = findMinSubArray(30, s3);
 
         // Print results.
         System.out.println("Min length of a subarray with sum greater than or equal to " + 7 + " of "
@@ -64,5 +65,7 @@ public class SmallestSubarrayWithAGivenSum {
                 + Arrays.toString(s2) + " is: " + r2);
         System.out.println("Min length of a subarray with sum greater than or equal to " + 8 + " of "
                 + Arrays.toString(s3) + " is: " + r3);
+        System.out.println("Min length of a subarray with sum greater than or equal to " + 30 + " of "
+                + Arrays.toString(s3) + " is: " + r4);
     }
 }

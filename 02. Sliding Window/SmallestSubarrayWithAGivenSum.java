@@ -43,7 +43,7 @@ public class SmallestSubarrayWithAGivenSum {
             }
         }
 
-        return smallestLength;
+        return smallestLength == Integer.MAX_VALUE ? 0 : smallestLength;
     }
 
     public static void main(String[] args) {

@@ -42,7 +42,9 @@ public class SmallestSubarrayWithAGivenSum {
      * than 'S'. We then increment the right end, and we repeat the above.
      * 
      * Time Complexity: O(N) where N is the length of our input array. We will be
-     * processing every value of our array.
+     * processing every value of our array. The outer for loop runs for all
+     * elements. The inner while loop processes each element only once. Therefore,
+     * time complexity is O(N + N), which is O(N) asymptotically.
      * 
      * Space Complexity: O(1).
      */

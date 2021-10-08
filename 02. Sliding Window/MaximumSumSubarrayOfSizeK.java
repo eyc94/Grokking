@@ -19,7 +19,7 @@ Explanation:    Subarray with maximum sum is [3, 4].
 
 import java.util.Arrays;
 
-class MaximumSumSubarrayOfSizeK {
+public class MaximumSumSubarrayOfSizeK {
 
     /*
      * There is a brute force approach that requires us to find every possible

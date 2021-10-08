@@ -29,20 +29,53 @@ Explanation:    Smallest subarrays with a sum greater than or equal to '8' are
 import java.util.Arrays;
 
 public class SmallestSubarrayWithAGivenSum {
+
+    /*
+     * We implement a Sliding Window technique. This is different in that there is
+     * no "fixed" size. Our size can be anything just as long as it meets the sum
+     * requirement, and it is the smallest possible.
+     * 
+     * We increase until we reach greater than or equal to 'S'. Once we do,
+     * calculate the length and update min length if needed. Now, see if we can make
+     * our window smaller. Make the window smaller by subtracting the left end from
+     * our window sum. And keep checking. This process repeats until our sum is less
+     * than 'S'. We then increment the right end, and we repeat the above.
+     * 
+     * Time Complexity: O(N) where N is the length of our input array. We will be
+     * processing every value of our array.
+     * 
+     * Space Complexity: O(1).
+     */
+
     public static int findMinSubArray(int S, int[] arr) {
+        // Holds the smallest length subarray whose sum is greater than or equal to 'S'.
         int smallestLength = Integer.MAX_VALUE;
 
+        // This holds the current window's sum.
         int windowSum = 0;
+        // This is the left end of the window.
         int windowStart = 0;
+        // We will expand the window from the right end.
         for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+            // Add the right end to the current window sum.
             windowSum += arr[windowEnd];
+            // Check to see if our current window's sum is greater than or equal to 'S'.
+            // We will shrink our window to see if the sum requirements fit and how much
+            // smaller we can get.
             while (windowSum >= S) {
+                // While it is, we do two things.
+                // 1. Update the min length if needed.
                 smallestLength = Math.min(smallestLength, windowEnd - windowStart + 1);
+                // 2. Shrink our window by subtracting the left end from the window sum.
                 windowSum -= arr[windowStart];
+                // Increment our left end to the right.
                 windowStart++;
             }
         }
 
+        // If our smallest length is still holding the largest possible value, this
+        // means there does not exist a subarray whose sum is greater than or equal to
+        // 'S'. So, we return 0. Otherwise, return the value in the variable.
         return smallestLength == Integer.MAX_VALUE ? 0 : smallestLength;
     }
 

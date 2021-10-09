@@ -31,6 +31,26 @@ import java.util.Arrays;
 
 public class FruitsIntoBaskets {
 
+    /*
+     * This solution uses a dynamic sliding window that expands and shrinks based on
+     * one condition. This condition is that there should only be 2 types of fruits.
+     * We will use a hash map to determine this because our hash map's size will
+     * tell us how many unique fruits we have. The size must be <= 2 at all times.
+     * 
+     * We expand our window and as soon as we reach a map size greater than 2, we
+     * will proceed to shrink our window until the size is <= 2. Once our hash map
+     * meets the requirement that the size is <= 2, we can now update the max fruits
+     * as needed.
+     * 
+     * Time Complexity: O(N) where N is the length of our character input array. The
+     * outer loop runs for all characters and the inner while loop processes each
+     * character only once. The time complexity is O(N + N) which is O(N)
+     * asymptotically.
+     * 
+     * Space Complexity: O(1) because our hash map will only hold max 3 characters
+     * regardless of how big our input array is.
+     */
+
     public static int findLength(char[] arr) {
         // This hash map keeps track of the character frequencies in our sliding window.
         HashMap<Character, Integer> charFreq = new HashMap<>();

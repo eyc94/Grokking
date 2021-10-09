@@ -26,13 +26,58 @@ Explanation:    We can put 3 'B' in one basket and two 'C' in the other basket. 
                 done if we start with the second letter ['B', 'C', 'B', 'B', 'C'].
 */
 
+import java.util.HashMap;
+import java.util.Arrays;
+
 public class FruitsIntoBaskets {
 
     public static int findLength(char[] arr) {
-        return -1;
+        // This hash map keeps track of the character frequencies in our sliding window.
+        HashMap<Character, Integer> charFreq = new HashMap<>();
+        // This keeps track of the max fruits in basket so far.
+        int maxFruits = 0;
+        // This is the left end of our sliding window.
+        int windowStart = 0;
+        // We expand our window to the right from the right end.
+        for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+            // Grab the right character.
+            char rightChar = arr[windowEnd];
+            // Add to map as new or increment frequency.
+            charFreq.put(rightChar, charFreq.getOrDefault(rightChar, 0) + 1);
+
+            // Shrink our window if needed. The map size represents the unique fruits.
+            // Number of baskets should be 2, so size cannot exceed 2.
+            while (charFreq.size() > 2) {
+                // Get the left character.
+                char leftChar = arr[windowStart];
+                // Decrement the frequency of the left character.
+                charFreq.put(leftChar, charFreq.get(leftChar) - 1);
+                // If the frequency of the decremented character is 0, remove it.
+                // The size of the hash map determines if we went over 2 baskets.
+                if (charFreq.get(leftChar) == 0) {
+                    charFreq.remove(leftChar);
+                }
+                // Shrink our window from the left end.
+                windowStart++;
+            }
+            // Update the max number of fruits in our basket now that it fulfills our
+            // requirements.
+            maxFruits = Math.max(maxFruits, windowEnd - windowStart + 1);
+        }
+        return maxFruits;
     }
 
     public static void main(String[] args) {
+        // Sample arrays.
+        char[] s1 = new char[] { 'A', 'B', 'C', 'A', 'C' };
+        char[] s2 = new char[] { 'A', 'B', 'C', 'B', 'B', 'C' };
 
+        // Calculate results.
+        int r1 = findLength(s1);
+        int r2 = findLength(s2);
+
+        // Print results.
+        System.out.println("Max number of fruits for array " + Arrays.toString(s1) + " is: " + r1);
+        System.out.println("Max number of fruits for array " + Arrays.toString(s2) + " is: " + r2);
     }
 }

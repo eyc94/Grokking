@@ -23,12 +23,49 @@ Output:         3
 Explanation:    Replace the 'b' or 'd' with 'c' to have the longest repeating substring "ccc".
 */
 
+import java.util.HashMap;
+
 public class LongestSubstringWithSameLettersAfterReplacement {
     public static int findLength(String str, int k) {
-        return -1;
+        HashMap<Character, Integer> charMap = new HashMap<>();
+        int longestLength = 0;
+        int mostCharFreq = 0;
+
+        int windowStart = 0;
+        for (int windowEnd = 0; windowEnd < str.length(); windowEnd++) {
+            char rightChar = str.charAt(windowEnd);
+            charMap.put(rightChar, charMap.getOrDefault(rightChar, 0) + 1);
+            mostCharFreq = Math.max(mostCharFreq, charMap.get(rightChar));
+
+            while (windowEnd - windowStart + 1 - mostCharFreq > k) {
+                char leftChar = str.charAt(windowStart);
+                charMap.put(leftChar, charMap.get(leftChar) - 1);
+                windowStart++;
+            }
+
+            longestLength = Math.max(longestLength, windowEnd - windowStart + 1);
+        }
+
+        return longestLength;
     }
 
     public static void main(String[] args) {
+        // Sample strings.
+        String s1 = "aabccbb";
+        String s2 = "abbcb";
+        String s3 = "abccde";
 
+        // Calculate results.
+        int r1 = findLength(s1, 2);
+        int r2 = findLength(s2, 1);
+        int r3 = findLength(s3, 1);
+
+        // Print results.
+        System.out.println("The longest substring with repeating characters with no more than " + 2
+                + " replacements of string " + s1 + " is: " + r1);
+        System.out.println("The longest substring with repeating characters with no more than " + 1
+                + " replacements of string " + s2 + " is: " + r2);
+        System.out.println("The longest substring with repeating characters with no more than " + 1
+                + " replacements of string " + s3 + " is: " + r3);
     }
 }

@@ -25,6 +25,51 @@ import java.util.HashMap;
 
 public class NoRepeatSubstring {
 
+    /*
+     * So there are two ways. Both are efficient but one is better than the other. I
+     * thought of solution 1.
+     * 
+     * Solution 1:
+     * 
+     * We do what we normally did. We expand our window and use a hash map to map
+     * characters to their frequencies. If the frequency of our right character is
+     * 2, this means that the character is repeating and we need to make sure it's
+     * not repeating.
+     * 
+     * To do this, we shrink our window and decrement frequencies of characters from
+     * the left end. Once our right character's frequency is back to 1, we can start
+     * expanding again from the right end.
+     * 
+     * Although this solution is good, we have to linearly move the left end to find
+     * the new index for windowStart. This new index will keep moving right until
+     * the right character frequency is 1.
+     * 
+     * Solution 2 (Better):
+     * 
+     * A better solution is to use the hash map to map characters to their index in
+     * our string.
+     * 
+     * We expand our window and we add the right character to our map along with its
+     * index in the string. As soon as we encounter a character that is already in
+     * the hash map, we need to update our windowStart so that there is only one
+     * occurrence of the right character.
+     * 
+     * To do this, we update our windowStart. If windowStart is already ahead of the
+     * last index of 'rightChar', we keep windowStart. If not, we go one position
+     * after rightChar.
+     * 
+     * Update the new rightChar's index and continue.
+     * 
+     * Time Complexity: O(N) where N is the length of our string.
+     * 
+     * Space Complexity: O(K) where K is the number of distinct characters in the
+     * input string. This means K <= N because in the worst case, the whole string
+     * might not have any repeating characters, so entire string is in hash map. We
+     * can also say that there is a fixed character set of 26 letters. So, we can
+     * say its fixed space of O(1). We can use a fixed array size instead of a hash
+     * map.
+     */
+
     public static int findLength(String str) {
         // This hash map maps characters to their index in the string.
         HashMap<Character, Integer> charIndexMap = new HashMap<>();

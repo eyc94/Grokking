@@ -24,6 +24,31 @@ import java.util.*;
 
 public class PairWithTargetSum {
 
+    /*
+     * We use the two pointer method because we take advantage of the fact that our
+     * input is sorted. Because our input is sorted, the low pointer holds the
+     * lowest value, and the high pointer holds the highest value.
+     * 
+     * What we do is we start from both ends and work our way in. We first find the
+     * sum that the pointers are pointing to initially. If the numbers add up to the
+     * target, we have found our target and return the indices of low and high.
+     * 
+     * If the sum is less than the target, we know we need to go higher. Because the
+     * array is sorted, the numbers increase as we increment. So, we increment low
+     * pointer.
+     * 
+     * If the sum is greater than the target, we know we need to go lower. Because
+     * the array is sorted, the numbers decrease as we decrement. So, we decrement
+     * the high pointer.
+     * 
+     * If we have the pointers meet and we haven't returned anything, return -1 as
+     * both indices to indicate as unsuccessful.
+     * 
+     * Time complexity: O(N) where N is the length of our array.
+     * 
+     * Space Complexity: O(1).
+     */
+
     public static int[] search(int[] arr, int targetSum) {
         // This is the pointer that starts at the beginning.
         int low = 0;

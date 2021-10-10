@@ -15,3 +15,5 @@
     2. If sum is less than target, we need a bigger pair. So, increment the start pointer.
 
 ![alt text](https://github.com/eyc94/Grokking/blob/master/images/sliding_window_one.png "Two pointer example one visual")
+
+- The time complexity of the above is O(N).

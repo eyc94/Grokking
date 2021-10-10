@@ -23,37 +23,67 @@ import java.util.*;
 
 public class WordsConcatenation {
     public static List<Integer> findWordConcatenation(String str, String[] words) {
+        // Create a hash map to keep track of words frequency.
         HashMap<String, Integer> wordFreq = new HashMap<>();
         for (String word : words) {
             wordFreq.put(word, wordFreq.getOrDefault(word, 0) + 1);
         }
 
+        // Make a list to return the indices in our string that the words start with.
         List<Integer> resultIndices = new ArrayList<>();
+        // Count the number of words in our array of words.
         int wordsCount = words.length;
+        // Get the word length of our words. All words have the same length.
         int wordLength = words[0].length();
 
+        // Iterate up to length - (total letters in words array).
+        // This is because the concatenation of all words in our words array ==
+        // (wordsCount * wordLength).
+        // We need enough room for the letters.
         for (int i = 0; i <= str.length() - wordsCount * wordLength; i++) {
+            // Create a hash map on each iteration to keep track of words seen.
+            // This maps the words to its frequency in our iteration.
             HashMap<String, Integer> wordsSeen = new HashMap<>();
+            // We iterate to the word count.
             for (int j = 0; j < wordsCount; j++) {
+                // Calculate the index of the next word to process.
+                // Basically it is every (wordLength)th character.
+                // Depending on word count, multiplying 'j' by wordLength always gives us the
+                // multiple to add to 'i' that brings us to our next word index.
+                // In this case, there are 2 words each of length 3.
+                // So, 'j' can only take on values of 0 and 1. We multiply the wordLength (3) to
+                // both values to get 0 and 3. These are the spacings between the two words we
+                // mentioned.
+                // Add these to each iteration counter 'i' to find the next word index.
                 int nextWordIndex = i + j * wordLength;
 
+                // We grab the substring of the current word by using the substring method.
+                // Use nextWordIndex and nextWordIndex + wordLength as boundaries.
                 String word = str.substring(nextWordIndex, nextWordIndex + wordLength);
+
+                // If our current word is NOT in our hash map, this means this word is NOT a
+                // part of the pattern. SO, we can break from the current 'j' iteration.
                 if (!wordFreq.containsKey(word)) {
                     break;
                 }
 
+                // Otherwise, we place the word in the seen hash map and increment seen counter.
                 wordsSeen.put(word, wordsSeen.getOrDefault(word, 0) + 1);
 
+                // After incrementing the frequency. If we have more of that word than are
+                // allowed in our words pattern, break from 'j' iteration and move on.
                 if (wordsSeen.get(word) > wordFreq.getOrDefault(word, 0)) {
                     break;
                 }
 
+                // If we make it to the last iteration of 'j' and everything is successful and
+                // didn't break, add the 'i' as an index to the result indices list.
                 if (j + 1 == wordsCount) {
                     resultIndices.add(i);
                 }
             }
         }
-
+        // Return the result indices.
         return resultIndices;
     }
 

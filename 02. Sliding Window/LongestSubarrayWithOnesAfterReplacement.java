@@ -34,7 +34,7 @@ public class LongestSubarrayWithOnesAfterReplacement {
                 onesCount++;
             }
 
-            while (windowEnd - windowStart + 1 - onesCount > k) {
+            if (windowEnd - windowStart + 1 - onesCount > k) {
                 if (arr[windowStart] == 1) {
                     onesCount--;
                 }

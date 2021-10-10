@@ -34,6 +34,23 @@ Explanation:    The three anagrams of the pattern in the given string are "bca",
 import java.util.*;
 
 public class StringAnagrams {
+
+    /*
+     * This code is the exact same as "PermutationInAString.java". The only
+     * difference is that when we find a match, instead of returning true, we add
+     * the windowStart index to the list to return.
+     * 
+     * For more information on how the rest of the code works, look at the file
+     * mentioned above.
+     * 
+     * Time Complexity: O(N + M) where N is the length of our input string and M is
+     * the length of our pattern string.
+     * 
+     * Space Complexity: O(M) where M is the length of the pattern. In the worst
+     * case, the space complexity is O(N). This happens when the pattern has only
+     * one character and the string contains only that character.
+     */
+
     public static List<Integer> findStringAnagrams(String str, String pattern) {
         List<Integer> resultIndices = new ArrayList<>();
         HashMap<Character, Integer> charFreq = new HashMap<>();
@@ -52,8 +69,8 @@ public class StringAnagrams {
                 }
             }
 
+            // Add index of windowStart to result indices.
             if (matched == charFreq.size()) {
-                // Add index of windowStart to result indices.
                 resultIndices.add(windowStart);
             }
 
@@ -68,7 +85,6 @@ public class StringAnagrams {
                 windowStart++;
             }
         }
-
         return resultIndices;
     }
 

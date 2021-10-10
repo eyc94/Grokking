@@ -23,6 +23,29 @@ import java.util.*;
 
 public class LongestSubarrayWithOnesAfterReplacement {
 
+    /*
+     * In this problem, we utilize the sliding window again. We need to keep
+     * expanding our sliding window until a requirement is met. The requirement for
+     * our sliding window is that we need to be able to replace 'k' 0s to 1s to get
+     * the max length with repeating 1s after 'k' replacements.
+     * 
+     * We keep track of the number of 1s in our current sliding window. We use this
+     * to figure out how many 0s we have in our window. This is done by subtracting
+     * the ones count from the current window length. If the 0s count is greater
+     * than 'k', we know that we do not have enough operations to perform
+     * replacements on all 0s. This means we shrink our window.
+     * 
+     * To shrink our window, we take the left end and increment it. If the left end
+     * is a 1, we decrement the ones count. That's it.
+     * 
+     * Now our window fulfills the requirement. Find the length of the current
+     * window. Update the longest length if needed.
+     * 
+     * Time Complexity: O(N) where N is the length of the input array.
+     * 
+     * Space Complexity: O(1).
+     */
+
     public static int findLength(int[] arr, int k) {
         // We keep track of how many 1s our current sliding window has.
         int onesCount = 0;

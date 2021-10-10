@@ -22,6 +22,73 @@ Explanation:    The only substring containing both the words is "catfox".
 import java.util.*;
 
 public class WordsConcatenation {
+
+    /*
+     * This code is a little tricky. I'll go over each step.
+     * 
+     * First, we create a hash map that keeps track of how many words there are in
+     * our words array. We map our words to their frequency.
+     * 
+     * We create a list to hold resultant indices to return to the user. This is
+     * done with an ArrayList implementation.
+     * 
+     * We get the word count and word length. We know that each word has the same
+     * length inside our words array. We need these both because we have to find out
+     * where in our iteration we need to stop. If we multiply both the count of the
+     * words and the lengths, we get total letters as a result of a concatenation of
+     * all words in our words array. If we subtract our string length by the total
+     * letters of concatenation, we get the last index to work on in our iteration.
+     * This is where 'i' will go to last. We do this to make room for the last
+     * iteration. The last iteration needs to accomodate room for (total letters of
+     * concatenation) or else we get index out of bounds.
+     * 
+     * While in our 'i' iterations, we create a new hash map. This new hash map
+     * serves to keep track of the words seen so far in our current iteration.
+     * 
+     * We now create a second pointer 'j' to scan the words from 'i'. Instead of
+     * linearly scanning, we only iterate 'j' to the number of words in our array.
+     * This is because we will be "jumping" to the start of the next word to check.
+     * In order to jump, we find the index of the word. To find this index, we
+     * multiply 'k' by the word length. This gives the multiple of the word length
+     * to add to 'i' to get the next word index.
+     * 
+     * For example, if there are 3 words, 'j' takes on values 0, 1, and 2. If each
+     * word is of length 3, the multiples are 0, 3, and 6. If our input string has
+     * length 12, 'i' iterates to 12 - 9 = 3. 'i' is 0, 1, 2, and 3. If 'i' is on 1,
+     * then the next word indices take on values of 1, 4, and 7. These indices
+     * represent the starting indices of the 3 words.
+     * 
+     * Now that we have gotten the next word index, we need the word that starts at
+     * that index. To do this, we use the substring method. The first parameter is
+     * the index we just calculated. The second parameter is the index at wordLength
+     * apart.
+     * 
+     * Now that we have gotten the word, check if it is in the list of words. This
+     * is because we need to see if it is part of the concatenation. IF the word IS
+     * NOT is the array of words, we BREAK immediately from the current 'j'
+     * iteration. Move to the next 'j' value. This is because this current word does
+     * not exist and will not be part of the solution.
+     * 
+     * Otherwise, we place the word in our seen hash map that we recently created.
+     * We increment the seen counter as well.
+     * 
+     * NOW, we check to see if we have seen the same word MORE than what we CAN see.
+     * If our words array only holds 1 frequency of the word, but the seen map shows
+     * that we encountered 2 in our iteration, this means that we have too many of
+     * that word. We BREAK immediately.
+     * 
+     * The last condition is if j + 1 == wordCount. If we make it this far and this
+     * evaluates to true, this means we have gone through all of 'j' and the
+     * concatenated words starting at 'i' belongs to the results list. Add 'i'.
+     * 
+     * Time Complexity: O(N * M * Len) where N is the length of our input string, M
+     * is the number of words, and Len is the length of each word.
+     * 
+     * Space Complexity: O(M) because we store all words in hash map. Can also have
+     * O(N) in the worst case for resulting list. The resulting complexity is O(M +
+     * N).
+     */
+
     public static List<Integer> findWordConcatenation(String str, String[] words) {
         // Create a hash map to keep track of words frequency.
         HashMap<String, Integer> wordFreq = new HashMap<>();

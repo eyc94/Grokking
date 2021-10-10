@@ -43,6 +43,43 @@ import java.util.*;
 
 public class PermutationInAString {
 
+    /*
+     * In this solution, what we did was utilize the sliding window. The shrinking
+     * requirement is when the sliding window is equal to or larger than the pattern
+     * length.
+     * 
+     * First, create a hash map and put all pattern characters' frequencies inside
+     * it.
+     * 
+     * Create a variable called matched that we increment when each characters'
+     * frequencies reach 0. If at any point, this variable equals the size of the
+     * hash map, we return true to the user and stop immediately.
+     * 
+     * We start from the right end. We grab the right character. Check if it is in
+     * hash map. If it is, we decrement the frequency of the character in the map.
+     * If the frequency reaches 0, we matched one letter. So, increment matched.
+     * 
+     * After this, we check to see if matched equals the size of our hash map. If it
+     * does, no need to go further. Return true.
+     * 
+     * We check for shrinking conditions. If our current window is >= the pattern
+     * length, we shrink from the left end. Grab the character from the left. If the
+     * character is NOT in the hash map, do nothing. Just increment the left end.
+     * 
+     * If the character IS in the hash map, do one check before incrementing the
+     * character's frequency. Check if the left character's frequency is 0. This is
+     * because if the character frequency is 0, this means we'll no longer have a
+     * matched letter. So if it's 0, we decrement matched variable. Then we put
+     * increment frequency of the letter.
+     * 
+     * If all else fails, return false.
+     * 
+     * Time Complexity: O(N + M) where N is the length of our string and M is the
+     * length of our pattern. We iterate through our string and pattern once.
+     * 
+     * Space Complexity: O(M) where M is the length of our pattern.
+     */
+
     public static boolean findPermutation(String str, String pattern) {
         // We create a hash map that maps characters to its frequency for the string
         // "pattern". This is how we keep track of the characters used in our sliding

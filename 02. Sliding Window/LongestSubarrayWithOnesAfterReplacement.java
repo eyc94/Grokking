@@ -24,26 +24,40 @@ import java.util.*;
 public class LongestSubarrayWithOnesAfterReplacement {
 
     public static int findLength(int[] arr, int k) {
+        // We keep track of how many 1s our current sliding window has.
         int onesCount = 0;
+        // We keep track of the longest length of repeating 1s after 'k' replacements.
         int longestLength = 0;
 
+        // This is the left end of our sliding window.
         int windowStart = 0;
+        // We expand the right end of our sliding window.
         for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {
+            // Grab the right end's number.
             int rightNum = arr[windowEnd];
+            // If the number is a 1, we increment the ones count.
             if (rightNum == 1) {
                 onesCount++;
             }
 
+            // Now, we have to find out if our current window supports 'k' replacements.
+            // The current window length - onesCount gives us the number of 0s that need to
+            // change to 1s. If this value is greater than the operations allowed (k), we
+            // begin shrinking our window from the left end. Otherwise, we do not go through
+            // this if statement.
             if (windowEnd - windowStart + 1 - onesCount > k) {
+                // If the value on the left end is 1, we decrement the 1st count.
                 if (arr[windowStart] == 1) {
                     onesCount--;
                 }
+                // Move the left window end to the right. Shrink!
                 windowStart++;
             }
 
+            // Now our current sliding window fulfills the requirements. So, update max
+            // length if needed.
             longestLength = Math.max(longestLength, windowEnd - windowStart + 1);
         }
-
         return longestLength;
     }
 

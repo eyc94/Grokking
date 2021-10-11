@@ -17,6 +17,8 @@ Output:         2
 Explanation:    The first two elements after removing the duplicates will be [2, 11].
 */
 
+import java.util.*;
+
 public class RemoveDuplicates {
 
     public static int remove(int[] arr) {
@@ -24,6 +26,18 @@ public class RemoveDuplicates {
     }
 
     public static void main(String[] args) {
+        // Sample arrays.
+        int[] s1 = new int[] { 2, 3, 3, 3, 6, 9, 9 };
+        int[] s2 = new int[] { 2, 2, 2, 11 };
 
+        // Calculate results.
+        int r1 = remove(s1);
+        int r2 = remove(s2);
+
+        // Print results.
+        System.out
+                .println("After removing duplicates from " + Arrays.toString(s1) + " the new array has length: " + r1);
+        System.out
+                .println("After removing duplicates from " + Arrays.toString(s2) + " the new array has length: " + r2);
     }
 }

@@ -20,6 +20,21 @@ Explanation:    The first two elements after removing every 'Key' will be [11, 1
 import java.util.*;
 
 public class RemoveKeys {
+
+    /*
+     * This problem deals with two pointers as well. One is the scanner 'i'. The
+     * other is the border 'border'. This border represents the next element that is
+     * NOT the key. When we encounter a non-key, we place it at the border.
+     * Everything to the left of the border is a non-key.
+     * 
+     * When we encounter a non-key with 'i', we place it at 'border'. We then keep
+     * moving border up.
+     * 
+     * Time Complexity: O(N) where N is the length of the array.
+     * 
+     * Space Complexity: O(1).
+     */
+
     public static int remove(int[] arr, int key) {
         // This is the border. This is the next spot where we place non-keys.
         // Everything to the left of this border will have non-keys.

@@ -22,6 +22,39 @@ Explanation:    There are four triplets whose sum is less than the target: [-1, 
 import java.util.*;
 
 public class TripletsWithSmallerSum {
+
+    /*
+     * We utilize the three pointer approach again for three sum. The
+     * requirement/criteria now is that the triplet sum is less than the target sum.
+     * 
+     * We first sort our array. We keep track of triplets count as well.
+     * 
+     * We iterate to the 3rd to last number in our array to make room for the last
+     * triplet. We create two sum boundaries of low and high for the remaining
+     * numbers.
+     * 
+     * While boundaries do not cross, we find the triplet sum. If the sum is less
+     * than the target, we have found a triplet.
+     * 
+     * THIS IS KEY!!! Because our array is sorted, all numbers before high and after
+     * low can also be the third number. This is because all numbers before high and
+     * after low are lower than our current high. This means that they also can form
+     * a valid triplet whose sum is less than target. Add to the count the distance
+     * between high and low (high - low).
+     * 
+     * Increment the low pointer because the sum is low and we can find another
+     * triplet whose sum still fits the requirements.
+     * 
+     * If the sum was greater than the target, we need to get a lower sum, so move
+     * high down.
+     * 
+     * Time Complexity: O(N^2 + N log N) which is O(N^2) asymptotically. This is
+     * because sorting takes O(N log N) time and we scan the whole array for every
+     * element in our array.
+     * 
+     * Space Complexity: O(N) if we just count the sorting space.
+     */
+
     public static int searchTriplets(int[] arr, int target) {
         // Sort the array.
         Arrays.sort(arr);

@@ -17,27 +17,40 @@ public class PrintTripletsWithSmallerSum {
      */
 
     public static List<List<Integer>> searchTriplets(int[] arr, int target) {
+        // We sort the array first.
         Arrays.sort(arr);
+        // This is the list of triplets.
         List<List<Integer>> triplets = new ArrayList<>();
 
+        // We iterate through the array again, leaving space for the final triplet to
+        // process.
         for (int i = 0; i < arr.length - 2; i++) {
+            // We create the low and high boundaries for two sum.
             int low = i + 1;
             int high = arr.length - 1;
 
+            // Work our way inside.
             while (low < high) {
+                // Grab the triplet sum.
                 int tripletSum = arr[i] + arr[low] + arr[high];
 
+                // If the triplet sum matches criteria.
                 if (tripletSum < target) {
+                    // All numbers before 'high' and after 'low' meet the requirements for triplet
+                    // sum smaller than target. So, we iterate from high to low + 1 and make those
+                    // numbers the third number in our triplet.
                     for (int j = high; j > low; j--) {
                         triplets.add(Arrays.asList(arr[i], arr[low], arr[j]));
                     }
+                    // Increment low because sum is less than target.
                     low++;
                 } else {
+                    // Decrement high because sum is greater than or equal to target.
                     high--;
                 }
             }
         }
-
+        // Return list of triplets.
         return triplets;
     }
 

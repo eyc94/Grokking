@@ -19,6 +19,8 @@ Input:          [2, 2, 0, 1, 2, 0]
 Output:         [0, 0, 1, 2, 2, 2]
 */
 
+import java.util.*;
+
 public class DutchNationalFlagProblem {
 
     public static void sort(int[] arr) {
@@ -26,6 +28,16 @@ public class DutchNationalFlagProblem {
     }
 
     public static void main(String[] args) {
+        // Sample 1.
+        int[] s1 = new int[] { 1, 0, 2, 1, 0 };
+        System.out.println("Before: " + Arrays.toString(s1));
+        sort(s1);
+        System.out.println("After: " + Arrays.toString(s1));
 
+        // Sample 2.
+        int[] s2 = new int[] { 2, 2, 0, 1, 2, 0 };
+        System.out.println("Before: " + Arrays.toString(s2));
+        sort(s2);
+        System.out.println("Before: " + Arrays.toString(s2));
     }
 }

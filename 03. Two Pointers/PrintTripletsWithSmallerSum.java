@@ -14,6 +14,26 @@ public class PrintTripletsWithSmallerSum {
      * This is a spin off problem from TripletsWithSmallerSum.java. Instead of
      * returning the number of triplets smallest than target, we return the list of
      * triplets.
+     * 
+     * This is the same process.
+     * 
+     * When we reach a triplet sum that fits the requirement of being less than
+     * target, we know that the numbers between low and high (inclusive) are all
+     * possible triplets that fit the requirement. So, these are also triplets.
+     * 
+     * We iterate from high to low + 1 and make these numbers the third number in
+     * our triplet. We then increment low because the sum was lower than target. We
+     * can potentially find a triplet that is again smaller than target with a high
+     * second number.
+     * 
+     * Time Complexity: O(N^3). We need O(N log N) for sorting. O(N^3) for
+     * processing the triplets. The total complexity is O(N^3 + N log N) which is
+     * O(N^3) asymptotically. This is O(N^3) because in our first for loop, we use a
+     * while loop. Inside the while loop, we run a for loop going backwards. As the
+     * size increases (input), so does our time.
+     * 
+     * Space Complexity: O(N) if we ignore the result and only take into account
+     * space needed for sorting.
      */
 
     public static List<List<Integer>> searchTriplets(int[] arr, int target) {

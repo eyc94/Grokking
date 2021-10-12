@@ -24,7 +24,25 @@ import java.util.*;
 public class DutchNationalFlagProblem {
 
     public static void sort(int[] arr) {
-        return;
+        int low = 0;
+        int high = arr.length - 1;
+
+        for (int i = 0; i <= high;) {
+            if (arr[i] == 0) {
+                int temp = arr[low];
+                arr[low] = arr[i];
+                arr[i] = temp;
+                low++;
+                i++;
+            } else if (arr[i] == 1) {
+                i++;
+            } else {
+                int temp = arr[high];
+                arr[high] = arr[i];
+                arr[i] = temp;
+                high--;
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -38,6 +56,6 @@ public class DutchNationalFlagProblem {
         int[] s2 = new int[] { 2, 2, 0, 1, 2, 0 };
         System.out.println("Before: " + Arrays.toString(s2));
         sort(s2);
-        System.out.println("Before: " + Arrays.toString(s2));
+        System.out.println("After: " + Arrays.toString(s2));
     }
 }

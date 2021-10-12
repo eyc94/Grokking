@@ -21,7 +21,9 @@ import java.util.*;
 public class TripletSumToZero {
 
     public static List<List<Integer>> searchTriplets(int[] arr) {
+        // Sort the array first.
         Arrays.sort(arr);
+        // This is the triplets list we return later.
         List<List<Integer>> triplets = new ArrayList<>();
 
         for (int i = 0; i <= arr.length - 3; i++) {

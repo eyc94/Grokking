@@ -20,6 +20,52 @@ import java.util.*;
 
 public class TripletSumToZero {
 
+    /*
+     * This utilizes basically the concept from Two Sum. We do Two Sum for every
+     * value of our array up to the 3rd to last. This gives us room for the final
+     * triplet to process.
+     * 
+     * First, we must sort the array. This makes everything easier.
+     * 
+     * We iterate our array through to the 3rd to last number. On each iteration we
+     * perform what we would have for Two Sum. Only that the target is now -X where
+     * X is the first number of our triplet. Our second and third numbers must add
+     * to -X to get a triplet with sum of 0.
+     * 
+     * If we're on our second and greater iteration, first check if this 'firstNum'
+     * is the same as our previous iteration's first number. If so, then this will
+     * produce a duplicate and we should skip this iteration. So, we continue.
+     * 
+     * Otherwise, we know this will be a unique starting number for a potential
+     * triplet.
+     * 
+     * We assign a low and high pointer to point to both ends of the remaining
+     * numbers. These represent the second and third number, respectively.
+     * 
+     * We implement Two Sum where the target is 0 - firstNum (or -firstNum).
+     * 
+     * If the two numbers add to -firstNum, we found our triplet. Add the triplets
+     * to the results and increment low and decrement high.
+     * 
+     * NOW, we must check for whether our NEW second and third numbers are the same
+     * as that we just processed. If our current low is equal to the previous low,
+     * increment low. If our current high is equal to the previous high, decrement
+     * high.
+     * 
+     * If the sum of the numbers is less than the target, we need a bigger sum. So,
+     * we increment low. If the sum of the numbers is greater than the target, we
+     * need a smaller sum. So, we decrement high.
+     * 
+     * Repeat this whole process until our 'i' scanner reaches 3rd to last number.
+     * 
+     * Time Complexity: O(N^2) where N is the length of our input array. We need O(N
+     * log N) for sorting. When searching for triplets, it takes O(N^2) time. Total
+     * is O(N^2 + N log N) which is O(N^2) time asymptotically.
+     * 
+     * Space Complexity: O(N) if we ignore the space for result triplets and just
+     * use space for sorting.
+     */
+
     public static List<List<Integer>> searchTriplets(int[] arr) {
         // Sort the array first.
         Arrays.sort(arr);

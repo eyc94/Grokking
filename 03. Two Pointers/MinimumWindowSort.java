@@ -31,46 +31,37 @@ import java.util.*;
 
 public class MinimumWindowSort {
     public static int sort(int[] arr) {
-        int leftBorder = 0;
-        int rightBorder = 0;
+        int low = 0;
+        int high = arr.length - 1;
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
 
-        for (int i = 0; i < arr.length - 1; i++) {
-            if (arr[i] > arr[i + 1]) {
-                leftBorder = i;
-                break;
-            }
+        while (low < arr.length - 1 && arr[low] <= arr[low + 1]) {
+            low++;
         }
 
-        for (int i = arr.length - 1; i > leftBorder; i--) {
-            if (arr[i] < arr[i - 1]) {
-                rightBorder = i;
-                break;
-            }
+        if (low == arr.length - 1) {
+            return 0;
         }
 
-        for (int i = leftBorder; i <= rightBorder; i++) {
+        while (high > 0 && arr[high] >= arr[high - 1]) {
+            high--;
+        }
+
+        for (int i = low; i <= high; i++) {
             min = Math.min(min, arr[i]);
             max = Math.max(max, arr[i]);
         }
 
-        for (int i = leftBorder; i >= 0; i--) {
-            if (arr[i] > min) {
-                leftBorder = i;
-            }
+        while (low > 0 && arr[low - 1] > min) {
+            low--;
         }
 
-        for (int i = rightBorder; i < arr.length; i++) {
-            if (arr[i] < max) {
-                rightBorder = i;
-            }
+        while (high < arr.length - 1 && arr[high + 1] < max) {
+            high++;
         }
 
-        if (leftBorder == 0 && rightBorder == 0) {
-            return 0;
-        }
-        return rightBorder - leftBorder + 1;
+        return high - low + 1;
     }
 
     public static void main(String[] args) {

@@ -22,27 +22,47 @@ import java.util.*;
 
 public class QuadrupleSumToTarget {
     public static List<List<Integer>> searchQuadruplets(int[] arr, int target) {
+        // Sort the array.
         Arrays.sort(arr);
+        // List of quadruplets to return.
         List<List<Integer>> quadruplets = new ArrayList<>();
 
+        // We iterate to the 3rd to last to make room for the final quadruplet to
+        // process.
         for (int i = 0; i < arr.length - 3; i++) {
+            // If we are not on the very first of the first numbers, and this new first
+            // number is equal to the old first number, we skip. This is because if we do
+            // not skip, there will be duplicates.
             if (i > 0 && arr[i] == arr[i - 1]) {
                 continue;
             }
+            // This is the loop for the second number (start of a triplet).
             for (int j = i + 1; j < arr.length - 2; j++) {
+                // Same thing here, check to see if we have already encountered the same second
+                // number. If so, skip it.
                 if (j > i + 1 && arr[j] == arr[j - 1]) {
                     continue;
                 }
+                // This is the two sum portion.
+                // Get the low and high boundaries to work inwards.
                 int low = j + 1;
                 int high = arr.length - 1;
 
+                // Work inwards.
                 while (low < high) {
+                    // Get the quadruplet sum.
                     int quadrupletSum = arr[i] + arr[j] + arr[low] + arr[high];
+                    // If quadruplet sum is the target.
                     if (quadrupletSum == target) {
+                        // Add the quadruplet to the list to return.
                         quadruplets.add(Arrays.asList(arr[i], arr[j], arr[low], arr[high]));
+                        // Increment both low and high.
                         low++;
                         high--;
 
+                        // Now before we proceed, we check to see if our new high and lows are the same
+                        // as the ones we just processed and added. If so, we skip over these values. Do
+                        // this by incrementing low and decrementing high.
                         while (low < high && arr[low] == arr[low - 1]) {
                             low++;
                         }
@@ -51,8 +71,10 @@ public class QuadrupleSumToTarget {
                             high--;
                         }
                     } else if (quadrupletSum < target) {
+                        // If the sum is less than the target, do what we normally did. Increment low.
                         low++;
                     } else {
+                        // If the sum is greater than the target, decrement high.
                         high--;
                     }
                 }

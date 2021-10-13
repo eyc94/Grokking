@@ -23,6 +23,10 @@ public class StartOfLinkedListCycle {
      * if the slow and fast pointers are 'n' length apart, they will represent the
      * head and tail of the cycle itself.
      * 
+     * Another way is to have the fast pointer move all 4 links instead of 3 like
+     * our code has. And move slow and fast together until they meet. This is
+     * another possibility. But it's the same thing.
+     * 
      * Time Complexity: O(N) where N is the length of our Linked List.
      * 
      * Space Complexity: O(1).

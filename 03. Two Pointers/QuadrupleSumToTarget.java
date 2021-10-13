@@ -21,6 +21,18 @@ Explanation:    Both the quadruplets add up to the target.
 import java.util.*;
 
 public class QuadrupleSumToTarget {
+
+    /*
+     * We use the same pointer approach. This time we add an extra loop because we
+     * are looking for quadruplets. The process is all the same. Look at code for
+     * explanation.
+     * 
+     * Time Complexity: O(N^3). We need O(N log N) to sort. Finding triplets now
+     * takes O(N^3) time. Total is O(N^3 + N log N) which is O(N^3) asymptotically.
+     * 
+     * Space Complexity: O(N) if we just take into account space required to sort.
+     */
+
     public static List<List<Integer>> searchQuadruplets(int[] arr, int target) {
         // Sort the array.
         Arrays.sort(arr);

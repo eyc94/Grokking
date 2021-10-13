@@ -7,6 +7,16 @@ Given the head of a LinkedList with a cycle, find the length of the cycle.
 
 public class LinkedListCycleLength {
 
+    /*
+     * This code is practically straightforward. Once we find the cycle and place
+     * our pointers there, we loop around the cycle and meet back at the slow
+     * pointer. While doing this, we count the length and keep track of it.
+     * 
+     * Time Complexity: O(N) where N is the length of the Linked List.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

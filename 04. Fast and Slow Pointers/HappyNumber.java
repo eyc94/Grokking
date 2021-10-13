@@ -48,10 +48,8 @@ public class HappyNumber {
         int slowNum = num;
 
         while (fastNum != 1 && slowNum != 1) {
-            fastNum = returnHappy(fastNum);
-            fastNum = returnHappy(fastNum);
+            fastNum = returnHappy(returnHappy(fastNum));
             slowNum = returnHappy(slowNum);
-
             if (fastNum == slowNum) {
                 return false;
             }
@@ -62,7 +60,7 @@ public class HappyNumber {
 
     public static int returnHappy(int num) {
         int sum = 0;
-        while (num != 0) {
+        while (num > 0) {
             int digit = num % 10;
             sum += digit * digit;
             num /= 10;

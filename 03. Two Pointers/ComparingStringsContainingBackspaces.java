@@ -30,6 +30,47 @@ Explanation:    After applying backspaces the strings become "xywrrmp" and "xywr
 */
 
 public class ComparingStringsContainingBackspaces {
+
+    public static boolean compareV2(String str1, String str2) {
+        int pointerOne = str1.length() - 1;
+        int pointerTwo = str2.length() - 1;
+        while (pointerOne >= 0 || pointerTwo >= 0) {
+            int i1 = getNextValidCharIndex(str1, pointerOne);
+            int i2 = getNextValidCharIndex(str2, pointerTwo);
+
+            if (i1 < 0 && i2 < 0) {
+                return true;
+            }
+
+            if (i1 < 0 || i2 < 0) {
+                return false;
+            }
+
+            if (str1.charAt(i1) != str2.charAt(i2)) {
+                return false;
+            }
+
+            pointerOne = i1 - 1;
+            pointerTwo = i2 - 1;
+        }
+        return true;
+    }
+
+    public static int getNextValidCharIndex(String str, int index) {
+        int backspaceCount = 0;
+        while (index >= 0) {
+            if (str.charAt(index) == '#') {
+                backspaceCount++;
+            } else if (backspaceCount > 0) {
+                backspaceCount--;
+            } else {
+                break;
+            }
+            index--;
+        }
+        return index;
+    }
+
     public static boolean compare(String str1, String str2) {
         StringBuilder stringOne = new StringBuilder();
         StringBuilder stringTwo = new StringBuilder();
@@ -79,10 +120,10 @@ public class ComparingStringsContainingBackspaces {
         String s8 = "xywrrmu#p";
 
         // Results.
-        boolean r1 = compare(s1, s2);
-        boolean r2 = compare(s3, s4);
-        boolean r3 = compare(s5, s6);
-        boolean r4 = compare(s7, s8);
+        boolean r1 = compareV2(s1, s2);
+        boolean r2 = compareV2(s3, s4);
+        boolean r3 = compareV2(s5, s6);
+        boolean r4 = compareV2(s7, s8);
 
         // Print.
         System.out.println("After backspaces, the strings " + s1 + " and " + s2 + " are equal: " + r1);

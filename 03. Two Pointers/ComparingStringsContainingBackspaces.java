@@ -31,31 +31,69 @@ Explanation:    After applying backspaces the strings become "xywrrmp" and "xywr
 
 public class ComparingStringsContainingBackspaces {
 
+    /*
+     * This is the two pointer approach. Only difference here is that we are putting
+     * one pointer on both strings.
+     * 
+     * We iterate from the back of the string. We find the next valid character
+     * after backspacing that we can compare. Once we do, we compare the characters
+     * at that index. The code is pretty straightforward.
+     * 
+     * Time Complexity: O(N + M) where N is the length of str1 and M is the length
+     * of str2.
+     * 
+     * Space Complexity: O(1).
+     */
+
     public static boolean compareV2(String str1, String str2) {
+        // We iterate two pointers from the ends of both strings.
+        // We will land on the next valid character to compare.
+        // These characters should be equal at every iteration.
         int pointerOne = str1.length() - 1;
         int pointerTwo = str2.length() - 1;
+        // Iterate while the two pointers are not -1.
         while (pointerOne >= 0 || pointerTwo >= 0) {
+            // Get the next valid character index.
+            // This takes us to a helper function that processes the backspaces.
+            // It brings back the index of the character that we can compare for both
+            // strings 1 and 2.
             int i1 = getNextValidCharIndex(str1, pointerOne);
             int i2 = getNextValidCharIndex(str2, pointerTwo);
 
+            // If both indices reach -1, this means that the last character (index 0) was
+            // backspaced. As in when we reach index 0, and we have 1 backspace left, the
+            // function returns -1 because there is no next valid character. This means both
+            // are equal.
             if (i1 < 0 && i2 < 0) {
                 return true;
             }
 
+            // If only one of the strings reach -1 and the other string still has a
+            // character to process, this means they are not equal after backspaces. This
+            // usually happens in uneven string lengths or strings with more backspaces than
+            // the other.
             if (i1 < 0 || i2 < 0) {
                 return false;
             }
 
+            // Once we reach a valid character, if both characters in both strings are NOT
+            // equal, this means the strings are NOT equal after backspaces.
             if (str1.charAt(i1) != str2.charAt(i2)) {
                 return false;
             }
 
+            // Point the two pointers behind the valid index for next processing.
             pointerOne = i1 - 1;
             pointerTwo = i2 - 1;
         }
+
+        // If we reach this point, it means that the last character (index 0) was not
+        // backspaced. We just ran out of room for both, meaning it's valid.
         return true;
     }
 
+    // This is the helper function. We count backspaces and decrement index and
+    // backspace count as needed.
     public static int getNextValidCharIndex(String str, int index) {
         int backspaceCount = 0;
         while (index >= 0) {

@@ -7,6 +7,27 @@ starting node of the cycle.
 
 public class StartOfLinkedListCycle {
 
+    /*
+     * This is basically just multiple steps building up to the final step.
+     * 
+     * First, we find that there is a cycle.
+     * 
+     * Second, we find the length as usual.
+     * 
+     * Third, using that length we do this trick. We move our fast and slow pointers
+     * back to the head. Our idea is to move the fast pointer up until the length
+     * between slow and fast is the length we found in step 2.
+     * 
+     * Then, we move the slow and fast pointers together until the fast pointer's
+     * next property points to slow. The idea is that the cycle is of length 'n' and
+     * if the slow and fast pointers are 'n' length apart, they will represent the
+     * head and tail of the cycle itself.
+     * 
+     * Time Complexity: O(N) where N is the length of our Linked List.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

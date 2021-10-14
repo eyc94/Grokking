@@ -24,6 +24,16 @@ Output:         4
 
 public class MiddleOfTheLinkedList {
 
+    /*
+     * This is another slow and fast pointer strategy. We iterate slow one node at a
+     * time. We iterate fast two nodes at a time. The fast pointer will reach null
+     * or the node before null. The slow pointer will point to the middle.
+     * 
+     * Time Complexity: O(N) where N is the length of the LinkedList.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;
@@ -35,14 +45,17 @@ public class MiddleOfTheLinkedList {
     }
 
     public static ListNode findMiddle(ListNode head) {
+        // Make the slow and fast pointers.
         ListNode slow = head;
         ListNode fast = head;
 
+        // Iterate until fast reaches null or node before null.
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
+        // Slow pointer will be pointing to the middle node.
         return slow;
     }
 

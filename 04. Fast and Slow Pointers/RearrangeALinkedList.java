@@ -22,6 +22,27 @@ Output:         2 -> 10 -> 4 -> 8 -> 6 -> null
 
 public class RearrangeALinkedList {
 
+    /*
+     * We use our fast and slow pointer method to find the middle of our LinkedList.
+     * Once we do, we reverse the second half. We keep a reference to the heads of
+     * both halves.
+     * 
+     * We run a while loop until one of them reaches null.
+     * 
+     * We rearrange using the 'temp' pointer. See the code below. Basically, if we
+     * have an even length LinkedList, our headTwo pointer will reach null and our
+     * headOne.next pointer will be pointing to itself. The headOne pointer will not
+     * be null, so we make headOne.next point to null.
+     * 
+     * In odd length arrays, our headOne pointer will be null while our headTwo
+     * pointer will not be. However, we do not need to connect anything else because
+     * it'll be connected as a result of the loop.
+     * 
+     * Time Complexity: O(N) where N is the LinkedList length.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

@@ -20,6 +20,57 @@ Output:         false
 
 public class PalindromeLinkedList {
 
+    /*
+     * This section is pretty straightforward. Follow these steps. We utilize a lot
+     * of what we learned.
+     * 
+     * We check to see if our LinkedList is empty or has one node. This is a valid
+     * palindrome, so we return true immediately.
+     * 
+     * First, find the middle of our LinkedList. This is done with slow and fast
+     * pointers. The slow pointer will in a sense point to the middle of the
+     * LinkedList. This slow pointer is said to be the tail of our reversed second
+     * half later.
+     * 
+     * Next, we call the reverse helper function on the second half (slow pointer).
+     * The function returns a ListNode (new head of the reversed list). The second
+     * half head will now point to this returned list.
+     * 
+     * We keep a reference to this new head because we'll be traversing with the
+     * returned head. We need the reference to reverse back to the original.
+     * 
+     * Now, we run a while loop while the two heads are not null. We compare each
+     * value of our head pointers. If the values do not match, we break immediately.
+     * This is a sign that we DO NOT have a palindrome. Otherwise, we keep
+     * incrementing our head pointers until they both reach null (odd length list)
+     * or one reaches null (even length list).
+     * 
+     * So, we now break from our while loop. There are only (3) reasons we break
+     * from our while loop:
+     * 
+     * 1. h1 and h2 values are not equal, meaning we do not have a palindrome. This
+     * causes us to break from the loop unnaturally and neither h1 nor h2 are null.
+     * 
+     * 2. h1 and h2 both reach null. This is the case of odd length lists of valid
+     * palindromes. They will be both null.
+     * 
+     * 3. h2 is null and h1 is not. This is the case of even length lists of valid
+     * palindromes. h2 is null.
+     * 
+     * So, it seems that when either or both h1 and h2 reach null, we have a valid
+     * palindrome.
+     * 
+     * First, we will revert the second half back to normal. Call reverse helper
+     * function on headTwo reference.
+     * 
+     * We then check if either h1 or h2 are null. If so, we return true. Else, we
+     * return false.
+     * 
+     * Time Complexity: O(N) where N is the length of our Linked List.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;
@@ -31,111 +82,72 @@ public class PalindromeLinkedList {
     }
 
     public static boolean isPalindrome(ListNode head) {
-        if (head.next == null) {
+        // This is for an empty or list with one node.
+        // Return true because they are valid palindromes.
+        if (head == null || head.next == null) {
             return true;
         }
 
-        // Find the middle.
+        // Find the middle of the Linked List.
+        // Slow pointer will point to middle of Linked List.
         ListNode fast = head;
         ListNode slow = head;
-        ListNode tailOne = null;
 
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
-            tailOne = slow;
             slow = slow.next;
         }
 
-        // Slow pointer now points to middle.
+        // Reverse second half.
+        // Have a reference to point to head 2 of right half.
+        ListNode headTwo = reverse(slow);
+        // Have a reference to head 2.
+        // This is because we'll be scanning with headTwo.
+        ListNode headTwoRef = headTwo;
 
-        // Reverse the second half.
-        ListNode prev = null;
-        ListNode curr = slow;
-
-        while (curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        // Find new headTwo and tailTwo and headOne and tailOne.
-
-        ListNode headOne = head;
-        tailOne.next = null;
-        ListNode headTwo = prev;
-        ListNode tailTwo = slow;
-
-        // Compare each head values. (account for even and odd length).
-        while (headOne != null && headTwo != null) {
-            if (headOne.value != headTwo.value) {
-                // Reconnect before returning false.
-                curr = prev;
-                prev = null;
-
-                while (curr != null) {
-                    ListNode next = curr.next;
-                    curr.next = prev;
-                    prev = curr;
-                    curr = next;
-                }
-
-                tailOne.next = prev;
-                return false;
+        // Compare each head values.
+        while (head != null && headTwo != null) {
+            // If the value is ever not equal, break.
+            if (head.value != headTwo.value) {
+                break;
             }
-
-            headOne = headOne.next;
+            // Move the heads of both halves.
+            head = head.next;
             headTwo = headTwo.next;
         }
 
-        // Even length palindrome. Both will reach null at the same time.
-        if (headOne == null && headTwo == null) {
-            curr = prev;
-            prev = null;
-
-            while (curr != null) {
-                ListNode next = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = next;
-            }
-
-            tailOne.next = prev;
+        // Reverse the second half head back to original.
+        reverse(headTwoRef);
+        // There are three reasons our while loop breaks.
+        // 1. h1 and h2 are not equal values, so the loop breaks without h1 or h2
+        // reaching null.
+        //
+        // 2. h2 reaches null before h1 because of even length palindrome.
+        //
+        // 3. h1 and h2 both reach null in odd length palindrome.
+        //
+        // So, we see that if our head pointers (either pointer) reaches null, we have a
+        // valid palindrome. The only time we do not have a valid palindrome is when the
+        // head pointers break without reaching null.
+        if (head == null || headTwo == null) {
+            // At least one head reached null, so return true.
             return true;
         }
-
-        // If the first half finishes scanning before the second half.
-        // In odd length Linked Lists, this will always be the case when it's a valid
+        // This means our while loop broke without reaching null. So not a valid
         // palindrome.
-        if (headOne == null && headTwo == tailTwo) {
-            curr = prev;
-            prev = null;
-
-            while (curr != null) {
-                ListNode next = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = next;
-            }
-
-            tailOne.next = prev;
-            return true;
-        }
-
-        // If we get here, this means that our Linked List is NOT a palindrome.
-        System.out.println("We reachd here!");
-        curr = headTwo;
-        prev = null;
-
-        while (curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        tailOne.next = prev;
         return false;
+    }
+
+    // This is the LinkedList reverse helper function.
+    public static ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
     }
 
     public static void main(String[] args) {

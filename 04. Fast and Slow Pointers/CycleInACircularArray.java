@@ -38,7 +38,42 @@ import java.util.*;
 public class CycleInACircularArray {
 
     public static boolean loopExists(int[] arr) {
+        int slow = 0;
+        int fast = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            boolean positive = false;
+            if (arr[slow] > 0) {
+                positive = true;
+            }
+
+            slow = nextIndex(slow, arr);
+            if (positive && arr[slow] < 0) {
+                continue;
+            }
+            if (!positive && arr[slow] > 0) {
+                continue;
+            }
+
+            fast = nextIndex(nextIndex(fast, arr), arr);
+
+            if (slow == fast) {
+                return true;
+            }
+        }
+
         return false;
+    }
+
+    public static int nextIndex(int num, int[] arr) {
+        num += arr[num];
+        if (num > arr.length - 1) {
+            num %= arr.length;
+        } else if (num < 0) {
+            num %= arr.length;
+            num = -num;
+        }
+        return num;
     }
 
     public static void main(String[] args) {

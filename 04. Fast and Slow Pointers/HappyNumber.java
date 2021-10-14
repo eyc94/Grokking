@@ -43,28 +43,78 @@ Explanations:   Here are the steps to find out that 12 is not a happy number:
 */
 
 public class HappyNumber {
+
+    /*
+     * The idea here is pretty simple. Although we are not using a Linked List, we
+     * still use the two pointer ideology. The nodes in our Linked List in this case
+     * is the number after every iteration of happy number calculation.
+     * 
+     * Our slow pointer will do one iteration. Our fast pointer will do two
+     * iterations. The "null" in our Linked List is the '1' that our number turns to
+     * in the end.
+     * 
+     * We keep looping our numbers in a cycle until our slow pointer equals our fast
+     * pointer. That is, until the two numbers are equal. At this point, our
+     * pointers will either point to '1' or a certain number other than '1'. If it
+     * is not one, this indicates a cycle and we return false.
+     * 
+     * If it is a '1', we return true because there is no cycle and our number is a
+     * happy number.
+     * 
+     * Time Complexity: O(log N). This is a bit complicated. All unhappy numbers get
+     * stuck in a cycle. The sequence behavior tells us:
+     * 
+     * 1. If the number N is <= 1000, then we reach the cycle or '1' in at most 1001
+     * steps.
+     * 
+     * 2. For N > 1000, suppose the number has 'M' digits and the next number is
+     * 'N1'. From Wikipedia, we know that the sum of squares of digits of 'N' is at
+     * most 9^2M or 81M (when all digits of 'N' are '9').
+     * 
+     * This means:
+     * 
+     * 1. N1 < 81M
+     * 
+     * 2. As we know M = log(N + 1)
+     * 
+     * 3. Therefore: N1 < 81 * log(N + 1) => N1 = O(log N).
+     * 
+     * Space Complexity: O(1).
+     */
+
     public static boolean find(int num) {
+        // We make two pointers.
         int fastNum = num;
         int slowNum = num;
 
-        while (fastNum != 1 && slowNum != 1) {
+        do {
+            // Calculate the happy number iteration twice for fast.
             fastNum = returnHappy(returnHappy(fastNum));
+            // Calculate the happy number iteration once for slow.
             slowNum = returnHappy(slowNum);
-            if (fastNum == slowNum) {
-                return false;
-            }
-        }
+            // If the two are equal, break out of loop.
+        } while (slowNum != fastNum);
 
-        return true;
+        // Check to see if slow pointer is 1. If so, return true.
+        // Can also check fast pointer.
+        return slowNum == 1;
     }
 
+    // This is the helper function that we use to calculate the next number.
     public static int returnHappy(int num) {
+        // We need to find the sum of the squares of its digits.
+        // Initialize sum to 0.
         int sum = 0;
+        // We reduce our number down until it reaches 0.
         while (num > 0) {
+            // Grab the last digit of our number.
             int digit = num % 10;
+            // Square this digit and add to accumulating sum.
             sum += digit * digit;
+            // Get rid of the last digit by integer division by 10.
             num /= 10;
         }
+        // Return the new number after one happy number iteration.
         return sum;
     }
 

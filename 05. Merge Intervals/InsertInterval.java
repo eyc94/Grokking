@@ -41,79 +41,96 @@ public class InsertInterval {
     public static List<Interval> insert(List<Interval> intervals, Interval newInterval) {
         List<Interval> mergedIntervals = new ArrayList<>();
 
-        // Create an Iterator object from intervals.
+        // We iterate through the intervals that do not merge with our inserted
+        // intervals.
+        // Add those intervals to the merged intervals.
+        int i = 0;
+        while (i < intervals.size() && intervals.get(i).end < newInterval.start) {
+            mergedIntervals.add(intervals.get(i));
+            i++;
+        }
 
-        // Grab the first interval.
+        // We continue our iteration of our intervals list.
+        // If the current interval's start value is <= the new interval's end, update
+        // the new interval's start and end values.
+        // The new interval (if overlapping with current) will always have an 'end'
+        // value greater than the current interval's 'start'.
+        while (i < intervals.size() && intervals.get(i).start <= newInterval.end) {
+            newInterval.start = Math.min(newInterval.start, intervals.get(i).start);
+            newInterval.end = Math.max(newInterval.end, intervals.get(i).end);
+            i++;
+        }
 
-        // Grab the first interval's start and end values.
+        // Add the merged interval.
+        mergedIntervals.add(newInterval);
 
-        // Loop until there isn't anymore intervals.
+        // There may be more intervals to add, so just add the remaining that do not
+        // overlap with the new interval.
+        while (i < intervals.size()) {
+            mergedIntervals.add(intervals.get(i));
+            i++;
+        }
 
-        // Get the current interval.
-
-        // If the previous end is >= current begin
-        // Update the end as max of prev and current's end.
-        // Also, update the start as min of prev and current's start.
-
-        // If the previous end is < current begin.
-        // Add the intervals to the merged intervals list.
-        // Update the start and end to the new values.
-
-        // End loop.
-
-        // Add the final interval to merged intervals.
-        // Return merged intervals.
-
+        // Return the merged intervals.
         return mergedIntervals;
     }
 
     public static void main(String[] args) {
+        // Sample 1.
         List<Interval> s1 = new ArrayList<>();
         s1.add(new Interval(1, 3));
         s1.add(new Interval(5, 7));
         s1.add(new Interval(8, 12));
+        Interval n1 = new Interval(4, 6);
+
         System.out.println("------------------------------------------------------");
+        System.out.println("New Interval: [" + n1.start + ", " + n1.end + "]");
         System.out.print("List Of Intervals: ");
         for (Interval interval : s1) {
             System.out.print("[" + interval.start + ", " + interval.end + "] ");
         }
         System.out.println();
         System.out.print("Merged intervals: ");
-        for (Interval interval : merge(s1)) {
+        for (Interval interval : insert(s1, n1)) {
             System.out.print("[" + interval.start + ", " + interval.end + "] ");
         }
         System.out.println();
         System.out.println("------------------------------------------------------");
 
+        // Sample 2.
         List<Interval> s2 = new ArrayList<>();
-        s2.add(new Interval(6, 7));
-        s2.add(new Interval(2, 4));
-        s2.add(new Interval(5, 9));
+        s2.add(new Interval(1, 3));
+        s2.add(new Interval(5, 7));
+        s2.add(new Interval(8, 12));
+        Interval n2 = new Interval(4, 10);
         System.out.println("------------------------------------------------------");
+        System.out.println("New Interval: [" + n2.start + ", " + n2.end + "]");
         System.out.print("List Of Intervals: ");
         for (Interval interval : s2) {
             System.out.print("[" + interval.start + ", " + interval.end + "] ");
         }
         System.out.println();
         System.out.print("Merged intervals: ");
-        for (Interval interval : merge(s2)) {
+        for (Interval interval : insert(s2, n2)) {
             System.out.print("[" + interval.start + ", " + interval.end + "] ");
         }
         System.out.println();
         System.out.println("------------------------------------------------------");
 
+        // Sample 3.
         List<Interval> s3 = new ArrayList<>();
-        s3.add(new Interval(1, 4));
-        s3.add(new Interval(2, 6));
-        s3.add(new Interval(3, 5));
+        s3.add(new Interval(2, 3));
+        s3.add(new Interval(5, 7));
+        Interval n3 = new Interval(1, 4);
         System.out.println("------------------------------------------------------");
+        System.out.println("New Interval: [" + n3.start + ", " + n3.end + "]");
         System.out.print("List Of Intervals: ");
         for (Interval interval : s3) {
             System.out.print("[" + interval.start + ", " + interval.end + "] ");
         }
         System.out.println();
         System.out.print("Merged intervals: ");
-        for (Interval interval : merge(s3)) {
+        for (Interval interval : insert(s3, n3)) {
             System.out.print("[" + interval.start + ", " + interval.end + "] ");
         }
         System.out.println();

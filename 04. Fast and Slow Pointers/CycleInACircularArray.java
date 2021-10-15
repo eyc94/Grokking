@@ -37,6 +37,43 @@ import java.util.*;
 
 public class CycleInACircularArray {
 
+    /*
+     * The strategy here is to utilize fast and slow pointers to find a cycle, if
+     * one exists. Our array will have negative and positive numbers. The positive
+     * represents forward movement, and the negative represents backwards movement.
+     * 
+     * We iterate through all the numbers because if one iteration has no cycle,
+     * another might.
+     * 
+     * We find the direction of that number. We flag it as true (positive) and false
+     * (negative).
+     * 
+     * Our idea is to move our slow pointer one number at a time and the fast
+     * pointer two pointers at a time. We use a helper function to get the next
+     * index that our pointers will go to. If our function returns a '-1', this
+     * means that there is no cycle and we can break out of our loop.
+     * 
+     * We move both the slow and fast pointers once. Before we move the fast pointer
+     * again, we check to see if fast pointer is not '-1'. If it isn't we can
+     * continue.
+     * 
+     * In the end, either our slow or fast will equal '-1'. Or, our slow will equal
+     * fast. If our slow or fast equals '-1' at the end of all our iterations, we
+     * will end our loop. Then, we return false because we haven't found a cycle.
+     * 
+     * However, if the slow and fast pointers meet and they are not '-1', a cycle
+     * has been found. We can return true immediately.
+     * 
+     * Time Complexity: O(N^2) where N is the length of our array. This is because
+     * we are iterating through each number while also iterating to find a cycle.
+     * 
+     * Space Complexity: O(1).
+     * 
+     * There is an alternate approach by keeping track of numbers that have already
+     * been visited in an auxiliary array. This reduces time to O(N) but increases
+     * space to O(N).
+     */
+
     public static boolean loopExists(int[] arr) {
         // We are going to iterate through all numbers in our array.
         // Even though one iteration does not have a cycle, we may find one in another

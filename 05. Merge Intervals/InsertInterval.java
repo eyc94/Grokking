@@ -27,6 +27,46 @@ Explanation:    After intsertion, since [1, 4] overlaps with [2, 3], we merged t
 import java.util.*;
 
 public class InsertInterval {
+
+    /*
+     * This is similar to the Merge Intervals code. This is pretty easy and
+     * straightforward. We want to iterate through all the intervals until we arrive
+     * at an interval whose end time is < the new interval's start time.
+     * 
+     * While skipping all the intervals that come before the new interval, we want
+     * to add those intervals to the merged list. This is because there is no
+     * overlap with these intervals. These intervals can stand alone as a merged
+     * interval.
+     * 
+     * Once we get to the index where we have to place a new interval, we run
+     * another while loop to iterate through the intervals WHILE there is an
+     * overlap. We expand our interval as needed. The condition of overlap is when
+     * the current interval's start time is <= the new interval's end time. No
+     * matter what kind of overlap, this will always be the case.
+     * 
+     * So, while there is an overlap, we update our new interval's 'start' and 'end'
+     * values. The 'start' value will be the minimum of the current interval's
+     * 'start' value and the new interval's 'start' value. The 'end' value is
+     * updated to be the maximum of the current interval's end value and the new
+     * interval's 'end' value.
+     * 
+     * Once the while loop is done, we have finished encountering intervals that are
+     * overlapping with the new interval. We have an expanded new interval, so we
+     * add this new interval to the merged interval.
+     * 
+     * After the while loop, we may have some intervals left over towards the end
+     * that are NOT overlapping with the new interval. Just like we did with the
+     * first while loop, we loop through the rest of our list, and we add the
+     * remaining intervals to the merged intervals.
+     * 
+     * We then return the merged intervals list.
+     * 
+     * Time Complexity: O(N) where N is the length of our intervals.
+     * 
+     * Space Complexity: O(N) because we return a list containing all merged
+     * intervals.
+     */
+
     // This is the Interval class.
     public static class Interval {
         int start;
@@ -135,9 +175,5 @@ public class InsertInterval {
         }
         System.out.println();
         System.out.println("------------------------------------------------------");
-
-        // int[][] s4 = new int[][] { { 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 } };
-        // int[][] result = mergeIntervalsV2(s4);
-        // System.out.println(Arrays.deepToString(result));
     }
 }

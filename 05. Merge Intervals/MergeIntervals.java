@@ -163,6 +163,64 @@ public class MergeIntervals {
         return mergedIntervals;
     }
 
+    // This is the version from Leetcode. It's good to see both ways done. This is
+    // done with 2D arrays.
+    public static int[][] mergeIntervalsV2(int[][] intervals) {
+        // If the input has 1 or 0 intervals, we just return that interval.
+        if (intervals.length < 2) {
+            return intervals;
+        }
+
+        // Sort the array. This time, not with Collections.sort().
+        // Sort them by start time.
+        Arrays.sort(intervals, (arr1, arr2) -> Integer.compare(arr1[0], arr2[0]));
+
+        // We cannot create a 2D array because we do not know the length of our 2D array
+        // result. When we merge, we may not always get the same length as the original.
+        // Two intervals may merge into one.
+        List<int[]> output_arr = new ArrayList<>();
+        // Grab a reference to the first interval.
+        int[] current_interval = intervals[0];
+
+        // Add this reference to the output array.
+        // REMEMBER!!!
+        // Any changes to current_interval will show changes in that interval we just
+        // added to the output array. This is because we keep a reference to the memory
+        // NOT a copy.
+        output_arr.add(current_interval);
+
+        // Iterate through all intervals.
+        for (int[] interval : intervals) {
+            // Grab our previous (current) interval start and end values.
+            int current_begin = current_interval[0];
+            int current_end = current_interval[1];
+            // Grab the current (next) value's start and end values.
+            int next_begin = interval[0];
+            int next_end = interval[1];
+
+            // If our next value starts before our current ends, we need to update the
+            // current_interval's end time. This is the max of current end time and next end
+            // time. This indicates overlapping.
+            if (current_end >= next_begin) {
+                // REMEMBER!!!
+                // When we make a change to the array, we make a change to the array we already
+                // placed in the output list. Even though we added a shorter interval, our
+                // output will reflect the changes of the new interval.
+                current_interval[1] = Math.max(current_end, next_end);
+            } else { // No overlapping.
+                // If there is no overlapping, the next interval is going to be a unique one.
+                // So make that the current_interval.
+                current_interval = interval;
+                // Add this interval to the output array.
+                output_arr.add(current_interval);
+            }
+        }
+
+        // We return a 2D array from our list of arrays by using toArray() function.
+        // We create a new 2D array whose length = size of the list of arrays.
+        return output_arr.toArray(new int[output_arr.size()][]);
+    }
+
     public static void main(String[] args) {
         List<Interval> s1 = new ArrayList<>();
         s1.add(new Interval(1, 4));
@@ -214,5 +272,9 @@ public class MergeIntervals {
         }
         System.out.println();
         System.out.println("------------------------------------------------------");
+
+        int[][] s4 = new int[][] { { 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 } };
+        int[][] result = mergeIntervalsV2(s4);
+        System.out.println(Arrays.deepToString(result));
     }
 }

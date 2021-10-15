@@ -192,7 +192,6 @@ public class MergeIntervals {
         // Iterate through all intervals.
         for (int[] interval : intervals) {
             // Grab our previous (current) interval start and end values.
-            int current_begin = current_interval[0];
             int current_end = current_interval[1];
             // Grab the current (next) value's start and end values.
             int next_begin = interval[0];

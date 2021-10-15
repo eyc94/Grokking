@@ -38,42 +38,72 @@ import java.util.*;
 public class CycleInACircularArray {
 
     public static boolean loopExists(int[] arr) {
-        int slow = 0;
-        int fast = 0;
-
+        // We are going to iterate through all numbers in our array.
+        // Even though one iteration does not have a cycle, we may find one in another
+        // iteration.
         for (int i = 0; i < arr.length; i++) {
-            boolean positive = false;
-            if (arr[slow] > 0) {
-                positive = true;
-            }
+            // We keep track of whether we are going forwards or backwards.
+            // If the number we are at is positive, this indicates forward movement.
+            boolean isForward = arr[i] >= 0;
+            // We have a slow and fast pointer.
+            int slow = i;
+            int fast = i;
 
-            slow = nextIndex(slow, arr);
-            if (positive && arr[slow] < 0) {
-                continue;
-            }
-            if (!positive && arr[slow] > 0) {
-                continue;
-            }
+            // Move the slow and fast pointer once and twice before checking conditions.
+            do {
+                // Move slow and fast pointer to next index.
+                slow = nextIndex(arr, isForward, slow);
+                fast = nextIndex(arr, isForward, fast);
+                // If our fast pointer is NOT -1. That is, our function above did NOT return -1.
+                // We can move our pointer again. So, move fast pointer once more.
+                if (fast != -1) {
+                    fast = nextIndex(arr, isForward, fast);
+                }
+                // We stop when either pointer is -1, indicating invalid cycle.
+                // Or, we stop when fast == slow because this means we found a cycle.
+            } while (slow != -1 && fast != -1 && slow != fast);
 
-            fast = nextIndex(nextIndex(fast, arr), arr);
-
-            if (slow == fast) {
+            // If we found a cycle, return true.
+            if (slow != -1 && slow == fast) {
                 return true;
             }
         }
-
+        // No valid cycle.
         return false;
     }
 
-    public static int nextIndex(int num, int[] arr) {
-        num += arr[num];
-        if (num > arr.length - 1) {
-            num %= arr.length;
-        } else if (num < 0) {
-            num %= arr.length;
-            num = -num;
+    // This helper function finds the next index the pointers will point to after
+    // one movement.
+    public static int nextIndex(int[] arr, boolean isForward, int currentIndex) {
+        // Calculate direction of current index.
+        // If current index number is positive, we are going positive direction.
+        boolean direction = arr[currentIndex] >= 0;
+        // If the current direction is different than the new direction, this means we
+        // are going backwards. This is not allowed, so return -1.
+        if (isForward != direction) {
+            return -1;
         }
-        return num;
+
+        // Otherwise, we find the next index.
+        // Add the current index's number to the current index to find the next index.
+        // If our next index goes over the allowed length, we divide by length and take
+        // the remainder.
+        int nextIndex = (currentIndex + arr[currentIndex]) % arr.length;
+
+        // If the next index is a negative index, we just add the length of the array to
+        // find the index from the back.
+        if (nextIndex < 0) {
+            nextIndex += arr.length;
+        }
+
+        // If the next index we found is equal to the current index (next == prev), this
+        // is a cycle. One element cycle. Return -1.
+        if (nextIndex == currentIndex) {
+            nextIndex = -1;
+        }
+
+        // Otherwise, return the next index the pointers will be at.
+        return nextIndex;
     }
 
     public static void main(String[] args) {

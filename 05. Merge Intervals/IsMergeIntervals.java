@@ -16,6 +16,17 @@ import java.util.*;
 
 public class IsMergeIntervals {
 
+    /*
+     * This is the same as MergeIntervals.java. Except, we do not add the merged
+     * interval. As soon as we encounter an overlap between intervals, we return
+     * true. Otherwise, we update the start and end values and keep going.
+     * 
+     * Time Complexity: O(N + N log N) because of sorting and iterating through our
+     * intervals. Asymptotic runtime is O(N log N).
+     * 
+     * Space Complexity: O(N) for sorting.
+     */
+
     // This is the Interval class.
     public static class Interval {
         int start;
@@ -28,24 +39,34 @@ public class IsMergeIntervals {
     }
 
     public static boolean doesMerge(List<Interval> intervals) {
-
+        // Sort the intervals by start time.
         Collections.sort(intervals, (a, b) -> Integer.compare(a.start, b.start));
 
+        // Create an Iterator object from the intervals.
         Iterator<Interval> intervalItr = intervals.iterator();
+
+        // Grab the first interval.
         Interval interval = intervalItr.next();
+        // Get the start and end value of the first interval.
         int start = interval.start;
         int end = interval.end;
 
+        // Iterate while we still have an interval.
         while (intervalItr.hasNext()) {
+            // Get the next interval.
             interval = intervalItr.next();
+            // If the current interval's start time is less than or equal to previous
+            // interval's end time, return true. This is because there is an overlap.
             if (interval.start <= end) {
                 return true;
             } else {
+                // No overlap, move on to next interval by updating the interval.
                 start = interval.start;
                 end = interval.end;
             }
         }
 
+        // If we get here, there is no overlapping.
         return false;
     }
 

@@ -46,9 +46,9 @@ public class InsertInterval {
 
     public static void main(String[] args) {
         List<Interval> s1 = new ArrayList<>();
-        s1.add(new Interval(1, 4));
-        s1.add(new Interval(2, 5));
-        s1.add(new Interval(7, 9));
+        s1.add(new Interval(1, 3));
+        s1.add(new Interval(5, 7));
+        s1.add(new Interval(8, 12));
         System.out.println("------------------------------------------------------");
         System.out.print("List Of Intervals: ");
         for (Interval interval : s1) {

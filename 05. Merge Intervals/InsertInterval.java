@@ -41,6 +41,29 @@ public class InsertInterval {
     public static List<Interval> insert(List<Interval> intervals, Interval newInterval) {
         List<Interval> mergedIntervals = new ArrayList<>();
 
+        // Create an Iterator object from intervals.
+
+        // Grab the first interval.
+
+        // Grab the first interval's start and end values.
+
+        // Loop until there isn't anymore intervals.
+
+        // Get the current interval.
+
+        // If the previous end is >= current begin
+        // Update the end as max of prev and current's end.
+        // Also, update the start as min of prev and current's start.
+
+        // If the previous end is < current begin.
+        // Add the intervals to the merged intervals list.
+        // Update the start and end to the new values.
+
+        // End loop.
+
+        // Add the final interval to merged intervals.
+        // Return merged intervals.
+
         return mergedIntervals;
     }
 

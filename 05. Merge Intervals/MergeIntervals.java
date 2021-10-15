@@ -38,31 +38,60 @@ public class MergeIntervals {
     }
 
     public static List<Interval> merge(List<Interval> intervals) {
-        List<Interval> mergedIntervals = new LinkedList<>();
-
+        // If the intervals list is only 1 or 0 intervals, we just need to return that.
         if (intervals.size() < 2) {
             return intervals;
         }
 
+        // Sort the list of lists by start time.
+        // We use Collections.sort which takes a collection and comparator as an
+        // argument.
+        // We use Lambda expressions that take in parameters 'a' and 'b' and returns the
+        // output of the function Integer.compare().
+        // We lastly use Integer.compare(a, b) that returns 0 if 'a' == 'b', -1 if 'a' <
+        // 'b', and 1 if 'a' > 'b'.
         Collections.sort(intervals, (a, b) -> Integer.compare(a.start, b.start));
 
-        Iterator<Interval> intervalItr = intervals.iterator();
-        Interval interval = intervalItr.next();
-        int start = interval.start;
-        int end = interval.end;
+        // Create the list of Intervals that hold the merged intervals to return.
+        List<Interval> mergedIntervals = new LinkedList<>();
 
+        // Create an Iterator object from the collection of Intervals.
+        Iterator<Interval> intervalItr = intervals.iterator();
+        // Grab the first interval from Interval collection.
+        Interval interval = intervalItr.next();
+        int start = interval.start; // Grab its start value.
+        int end = interval.end; // Grab its end value.
+
+        // Iterate while we still have something in our collection of Intervals.
         while (intervalItr.hasNext()) {
+            // Grab the next interval.
             interval = intervalItr.next();
+            // If the start value of this interval is <= the end of the previous, there is
+            // an overlap.
+            // So, we know that the start of the current interval is inside the previous
+            // interval. We need to see if the current end value is greater than the
+            // previous end value. If so, we use it. Use the max of the two to be the new
+            // merged interval end.
             if (interval.start <= end) {
                 end = Math.max(interval.end, end);
-            } else {
+            } else { // If our current interval is NOT overlapping with previous.
+                // Add the previous interval start and end as merged interval in our result
+                // list.
                 mergedIntervals.add(new Interval(start, end));
+                // Update the new start and end values to reflect current interval for next
+                // iteration.
                 start = interval.start;
                 end = interval.end;
             }
         }
 
+        // Add the last interval.
+        // Whether it's from merging from first 'if' condition or the else condition.
+        // If it's from the 'else' condition, remember that we updated our 'start' and
+        // 'end' values. If our while loop ends, we still have a start and end value we
+        // need to account for.
         mergedIntervals.add(new Interval(start, end));
+        // Return the merged intervals to the user.
         return mergedIntervals;
     }
 

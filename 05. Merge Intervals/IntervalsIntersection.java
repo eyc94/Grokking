@@ -20,6 +20,31 @@ Explanation:    The output list contains the common intervals between the two li
 import java.util.*;
 
 public class IntervalsIntersection {
+
+    /*
+     * This utilizes the merge intervals code but in a different way. The
+     * requirements for the intersected intervals determines what we keep track of.
+     * Intersected intervals means the values in our intervals that BOTH arrays
+     * share. So, we determine what we do once we encounter an overlap.
+     * 
+     * How do we determine an overlap? If array1's start time is between array2's
+     * start and end time. Or, if array2's start time is between array1's start and
+     * end time.
+     * 
+     * Once we encounter an overlap, how do we determine what intervals to keep? We
+     * take the maximum of both start times, and we take the minimum of both end
+     * times. With these, we add the new interval to our results list.
+     * 
+     * How do we determine which pointer moves? We move the pointer of the interval
+     * that finishes first. So, whichever end time is less than the other, we move.
+     * This is because the longest end time may overlap with the next interval. So,
+     * we want to move the interval that ends first.
+     * 
+     * Time Complexity: O(N + M) where N and M is the length of both arrays.
+     * 
+     * Space Complexity: O(1) ignoring the space we need for results list.
+     */
+
     // This is the Interval class.
     public static class Interval {
         int start;

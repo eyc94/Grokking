@@ -25,6 +25,24 @@ Explanation:    Since [4, 5] and [3, 6] overlap, a person cannot attend both of 
 import java.util.*;
 
 public class ConflictingAppointments {
+
+    /*
+     * This is similar to our Merge Intervals problem. This is a lot easier than it
+     * seems. We just sort our array by start time.
+     * 
+     * When we encounter an interval whose start time is before the end time of the
+     * previous interval, we return false immediately. There is an overlap and we
+     * cannot take all courses.
+     * 
+     * If we successfully get through our array, we know there is no overlap. So,
+     * return true.
+     * 
+     * Time Complexity: O(N + N log N) which is O(N log N) asymptotically. This is
+     * because we need to sort our array.
+     * 
+     * Space Complexity: O(N) for sorting.
+     */
+
     // This is the Interval class.
     public static class Interval {
         int start;
@@ -37,12 +55,20 @@ public class ConflictingAppointments {
     }
 
     public static boolean canAttendAllAppointments(Interval[] intervals) {
+        // We sort our array by start time.
         Arrays.sort(intervals, (a, b) -> Integer.compare(a.start, b.start));
+        // We iterate from the second interval onwards.
         for (int i = 1; i < intervals.length; i++) {
+            // Check if our current interval overlaps with the previous interval.
+            // Because our array is sorted, if our current interval starts before the
+            // previous ends, we know that there is an overlap.
             if (intervals[i].start <= intervals[i - 1].end) {
+                // We can return false immediately.
                 return false;
             }
         }
+
+        // If we get through all intervals and no problems occur, return true.
         return true;
     }
 

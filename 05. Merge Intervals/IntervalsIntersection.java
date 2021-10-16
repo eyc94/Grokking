@@ -32,24 +32,45 @@ public class IntervalsIntersection {
     }
 
     public static Interval[] merge(Interval[] arr1, Interval[] arr2) {
+        // We create a list to keep track of our intersecting intervals.
+        // We will convert this to an array later to return to the user.
+        // This is because arrays are static.
         List<Interval> intervalsIntersection = new ArrayList<>();
 
+        // Iterate both interval arrays going one interval at a time.
         int i = 0;
         int j = 0;
+        // Iterate until one pointer reaches the end of the array.
         while (i < arr1.length && j < arr2.length) {
+            // Check for overlapping conditions.
+            // If the start time of array1 is >= array2's start and <= array2's end. (array1
+            // interval starts between array2's start and end).
+            // OR
+            // If the start time of array2 is >= array1's start and <= array1's end. (array2
+            // interval starts between array1's start and end).
             if ((arr1[i].start >= arr2[j].start && arr1[i].start <= arr2[j].end)
                     || (arr2[j].start >= arr1[i].start && arr2[j].start <= arr1[i].end)) {
+                // Add the intersections ONLY.
+                // The intersection is the MAX 'start' time of array1 and array2 intervals.
+                // The intersection is the MIN 'end' time of array1 and array2 intervals.
                 intervalsIntersection
                         .add(new Interval(Math.max(arr1[i].start, arr2[j].start), Math.min(arr1[i].end, arr2[j].end)));
             }
 
+            // We define the requirements for the pointer iterations.
+            // We move the pointer of the interval that finishes faster. This way we can
+            // account for the longer 'end' time of the two being overlapped in the next
+            // interval to follow.
             if (arr1[i].end < arr2[j].end) {
+                // If array1 interval finishes first, move that interval.
                 i++;
             } else {
+                // If array2 interval finishes first, move that interval.
                 j++;
             }
         }
 
+        // Convert list to array and return it.
         return intervalsIntersection.toArray(new Interval[intervalsIntersection.size()]);
     }
 

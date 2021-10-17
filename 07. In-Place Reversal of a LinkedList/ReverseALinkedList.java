@@ -13,6 +13,23 @@ Output:         10 -> 8 -> 6 -> 4 -> 2 -> null
 
 public class ReverseALinkedList {
 
+    /*
+     * This is the classic reversing a LinkedList problem. We keep a reference to a
+     * previous node because this is a Singly LinkedList.
+     * 
+     * We create a pointer that points to head. We iterate until this pointer
+     * reaches null. Make a next pointer to the next node after curr. Point
+     * curr.next to the prev pointer. Move prev to the curr node. Move curr to the
+     * next node for the next iteration.
+     * 
+     * The prev pointer will, in the end, point to the head of the reversed
+     * LinkedList.
+     * 
+     * Time Complexity: O(N) where N is the length of our LinkedList.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

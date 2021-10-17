@@ -28,6 +28,39 @@ import java.util.*;
 
 public class MaximumCPULoad {
 
+    /*
+     * This is just like the Minimum Meeting Rooms problem. We will create a Min
+     * Heap that stores the jobs that are currently ongoing and under load. We will
+     * keep track of the current load in our Min Heap. We subtract the loads going
+     * out of the Min Heap, and we add the load of the job going in the Min Heap.
+     * 
+     * So, sort the collections of jobs by start time, as usual.
+     * 
+     * We create a Min Heap with the capacity of the jobs size. We order the jobs in
+     * our Min Heap by increasing end time.
+     * 
+     * We keep track of our Min Heap load. This is the load of all the jobs that are
+     * ongoing.
+     * 
+     * We iterate through our jobs. We empty our Min Heap's by the first job if the
+     * first job's end time is before the new job's start time. If the first job's
+     * end time equals the new job's start time, this counts as an overlap. Before
+     * we remove the job from the Min Heap, we remove the load from the current load
+     * we're keeping track of.
+     * 
+     * After the while loop, we have no jobs ongoing that end before the new job to
+     * be added. Add the new job. Add the new job's load to the current load. Update
+     * the max load if the current load is greater than max load.
+     * 
+     * Time Complexity: O(N log N) where N is the jobs size. It takes O(N log N) to
+     * sort our jobs. For each job, we do O(log N) work because of the offer() and
+     * poll() operations. So the total is O(N log N + N log N) which is O(N log N)
+     * asymptotically.
+     * 
+     * Space Complexity: O(N) for sorting. In the worst case, we insert all jobs in
+     * Min Heap (when all jobs overlap). This will take O(N) space.
+     */
+
     // This is the Job class.
     public static class Job {
         int start;

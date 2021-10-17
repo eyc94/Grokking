@@ -15,6 +15,19 @@ import java.util.*;
 
 public class FindConflictingAppointments {
 
+    /*
+     * This is the brute force approach. We go through each interval pair with a
+     * nested for loop. This is inefficient, but it will do for now. We see which
+     * pair is overlapping.
+     * 
+     * If we encounter an overlap, add this conflict to the list to be added to the
+     * list of lists.
+     * 
+     * Time Complexity: O(N^2) where N is length of our intervals.
+     * 
+     * Space Complexity: O(N) if we just worry about sorting.
+     */
+
     // This is the Interval class.
     public static class Interval {
         int start;

@@ -28,27 +28,45 @@ public class ReverseASubList {
             return head;
         }
 
-        ListNode p1 = head;
-        ListNode prev = head;
-        ListNode curr = head.next;
-
-        for (int i = 0; i < p - 2; i++) {
-            p1 = p1.next;
+        // We keep the first 'p - 1' nodes.
+        // Curr will be at position 'p'.
+        // Prev will be at position 'p - 1'.
+        ListNode prev = null;
+        ListNode curr = head;
+        for (int i = 0; curr != null && i < p - 1; ++i) {
+            prev = curr;
             curr = curr.next;
         }
 
-        for (int i = 0; i < q; i++) {
-            prev = prev.next;
-        }
+        // Keep reference to the last node before 'p' (at position 'p - 1').
+        // Keep reference to the last node after we reverse the sublist (position 'p').
+        // We need these references to connect the reversed sublist to the original
+        // list.
+        ListNode lastNodeBeforeP = prev;
+        ListNode lastNodeAfterReverse = curr;
 
-        for (int i = 0; i <= q - p; i++) {
+        // We reverse the nodes from position 'p' to position 'q'.
+        for (int i = 0; curr != null && i <= q - p; i++) {
             ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
 
-        p1.next = prev;
+        // First check if position 'p - 1' is null.
+        // In other words, if we had to reverse the first node of our original list,
+        // there is no previous node before the first node.
+        // Point head to prev.
+        // If not, connect this node to the prev.
+        if (lastNodeBeforeP != null) {
+            lastNodeBeforeP.next = prev;
+        } else {
+            head = prev;
+        }
+
+        // Lastly, we need to connect the last node after reversing to node 'q + 1'.
+        // The curr pointer lands on 'q + 1'.
+        lastNodeAfterReverse.next = curr;
         return head;
     }
 

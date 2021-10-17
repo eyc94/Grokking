@@ -14,6 +14,27 @@ Explanation:    The first k (3) nodes are reversed. Notice that 'k' is 1-indexed
 
 public class ReverseFirstKElements {
 
+    /*
+     * This problem is the same as the ReverseASubList.java. The only difference is
+     * the 'p' = 0 and 'q' = 'k'. This makes the code a lot easier.
+     * 
+     * We do not need to skip over 'p - 1' elements because 'p' is the first node of
+     * our Linked List. Just keep a reference to this first node because it'll be
+     * the last node after we reverse the sublist.
+     * 
+     * We reverse the sublist as usual from 0 to 'k'. Once we're done, the prev
+     * pointer will point to the new head of the reversed list. This head is the new
+     * overall head of the whole list. So point head to this prev node.
+     * 
+     * Now, we get the reference to the original first node we had. We point the
+     * next pointer of this node to the node at position 'k + 1'. The curr pointer
+     * is pointing at this node. So just point to curr.
+     * 
+     * Time Complexity: O(N) where N is the length of our LinkedList.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

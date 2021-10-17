@@ -47,10 +47,36 @@ public class MinimumMeetingRooms {
     }
 
     public static int findMinimumMeetingRooms(List<Meeting> meetings) {
-        return -1;
+        // If there are no meetings or meetings points to nothing, there are no classes.
+        if (meetings == null || meetings.size() == 0) {
+            return 0;
+        }
+
+        // Sort by start time.
+        Collections.sort(meetings, (a, b) -> Integer.compare(a.start, b.start));
+
+        // Keep track of minimum rooms needed.
+        int minRooms = 0;
+        // Create a min heap that holds meetings times by increasing end time.
+        PriorityQueue<Meeting> minHeap = new PriorityQueue<>(meetings.size(), (a, b) -> Integer.compare(a.end, b.end));
+
+        for (Meeting meeting : meetings) {
+            // Remove all meetings that ended.
+            while (!minHeap.isEmpty() && meeting.start >= minHeap.peek().end) {
+                minHeap.poll();
+            }
+            // Add current meeting into minHeap.
+            minHeap.offer(meeting);
+            // All active meetings in minHeap, so we need rooms for all of them.
+            minRooms = Math.max(minRooms, minHeap.size());
+        }
+
+        // Return minimum rooms needed.
+        return minRooms;
     }
 
     public static void main(String[] args) {
+        // Sample 1.
         List<Meeting> s1 = new ArrayList<>() {
             {
                 add(new Meeting(4, 5));
@@ -60,6 +86,51 @@ public class MinimumMeetingRooms {
             }
         };
         int result = findMinimumMeetingRooms(s1);
+        System.out.println("Minimum meeting rooms required: " + result);
+
+        // Sample 2.
+        s1 = new ArrayList<>() {
+            {
+                add(new Meeting(1, 4));
+                add(new Meeting(2, 5));
+                add(new Meeting(7, 9));
+            }
+        };
+        result = findMinimumMeetingRooms(s1);
+        System.out.println("Minimum meeting rooms required: " + result);
+
+        // Sample 3.
+        s1 = new ArrayList<>() {
+            {
+                add(new Meeting(6, 7));
+                add(new Meeting(2, 4));
+                add(new Meeting(8, 12));
+            }
+        };
+        result = findMinimumMeetingRooms(s1);
+        System.out.println("Minimum meeting rooms required: " + result);
+
+        // Sample 4.
+        s1 = new ArrayList<>() {
+            {
+                add(new Meeting(1, 4));
+                add(new Meeting(2, 3));
+                add(new Meeting(3, 6));
+            }
+        };
+        result = findMinimumMeetingRooms(s1);
+        System.out.println("Minimum meeting rooms required: " + result);
+
+        // Sample 5.
+        s1 = new ArrayList<>() {
+            {
+                add(new Meeting(4, 5));
+                add(new Meeting(2, 3));
+                add(new Meeting(2, 4));
+                add(new Meeting(3, 5));
+            }
+        };
+        result = findMinimumMeetingRooms(s1);
         System.out.println("Minimum meeting rooms required: " + result);
     }
 }

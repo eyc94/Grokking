@@ -34,7 +34,8 @@ public class FindConflictingAppointments {
         // We return a list of list of intervals that conflict.
         List<List<Interval>> conflicts = new ArrayList<>();
 
-        // Iterate from the second interval onwards.
+        // Use a nested for loop to iterate through each possible pair of intervals.
+        // Add the pair to the list of whichever conflicts.
         for (int i = 0; i < intervals.length; i++) {
             for (int j = i + 1; j < intervals.length; j++) {
                 if (intervals[j].start < intervals[i].end) {

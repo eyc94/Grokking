@@ -24,6 +24,31 @@ public class ReverseASubList {
     }
 
     public static ListNode reverse(ListNode head, int p, int q) {
+        if (p == q) {
+            return head;
+        }
+
+        ListNode p1 = head;
+        ListNode prev = head;
+        ListNode curr = head.next;
+
+        for (int i = 0; i < p - 2; i++) {
+            p1 = p1.next;
+            curr = curr.next;
+        }
+
+        for (int i = 0; i < q; i++) {
+            prev = prev.next;
+        }
+
+        for (int i = 0; i <= q - p; i++) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        p1.next = prev;
         return head;
     }
 

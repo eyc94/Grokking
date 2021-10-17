@@ -99,7 +99,7 @@ public class MinimumMeetingRooms {
      * minHeap which requires O(N) space.
      */
 
-    // This is the Interval class.
+    // This is the Meeting class.
     public static class Meeting {
         int start;
         int end;

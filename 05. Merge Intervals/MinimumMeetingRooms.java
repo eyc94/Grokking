@@ -35,6 +35,70 @@ import java.util.*;
 
 public class MinimumMeetingRooms {
 
+    /*
+     * The code here is a little tricky and we use a PriorityQueue (minHeap). First,
+     * we cannot just iterate through our meetings and find overlaps and merge
+     * repeatedly. If our final merged interval has every meeting overlapping, that
+     * does not mean we need the maximum amount of rooms possible. We're trying to
+     * see if we can reduce the amount.
+     * 
+     * We need to keep track of the mutual exclusiveness of the overlapping
+     * meetings.
+     * 
+     * We need to keep track of the end times of the meetings that are currently in
+     * progress. When we find a meeting that is overlapping with one in session,
+     * before we make another room for it, we check to see if a room in progress has
+     * a meeting ending before our new meeting starts. Then, we can use this room
+     * instead of allocating a new room.
+     * 
+     * So, we need to keep track of the ending times of all the meetings currently
+     * happening. When we try to schedule a new meeting, we see what meetings
+     * already ended. Keep these meetings in a data structure that can easily give
+     * us the smallest ending time. A Min Heap is perfect.
+     * 
+     * First, we sort the meetings by start time.
+     * 
+     * We create a minHeap that has a max capacity of the meetings list size. Our
+     * comparison is based on the end times of the meetings. The front is going to
+     * have the smallest end time. This minHeap stores meetings that are currently
+     * happening in their rooms. At the end, our minHeap size will have a collection
+     * of meetings in progress that are overlapping. This size is the number of
+     * rooms we need.
+     * 
+     * Iterate through all of our meetings.
+     * 
+     * On every iteration, we need to remove meetings that are ending before our new
+     * meeting is scheduled to start. So, iterate while minHeap is not empty and
+     * when the first meeting in our minHeap ends before or on the start time of the
+     * new (to-be-scheduled) meeting.
+     * 
+     * Note: We use poll() to remove() and offer() to add(). This is because in the
+     * case where the queue is empty, poll() will return null where remove() throws
+     * an exception. If we cannot add to queue, offer() returns false and add()
+     * throws an exception. We use peek() to see the front of the priority queue
+     * (the meeting with the smallest end time). Or meeting that is going to finish
+     * first.
+     * 
+     * The idea is that a meeting that's ending soon and ends before the start of
+     * the new meeting can have its room be used by the new meeting to be scheduled.
+     * 
+     * Once our while loop finishes, all meetings not overlapping with the new
+     * meeting is gone. We add the new meeting to the priority queue.
+     * 
+     * We update the minimum rooms required by taking the max of the current value
+     * and the size of our queue. Remember, our size represents the number of rooms.
+     * 
+     * Return the minimum rooms required.
+     * 
+     * Time Complexity: O(N log N) where N is the total number of meetings. This is
+     * because we sort in the beginning. We also need to poll() or offer() meetings.
+     * This operation takes O(log N) time. Total complexity is O(N log N + N log N),
+     * which is O(N log N) asymptotically.
+     * 
+     * Space Complexity: O(N) for sorting. Worst case is adding all meetings to
+     * minHeap which requires O(N) space.
+     */
+
     // This is the Interval class.
     public static class Meeting {
         int start;
@@ -60,6 +124,7 @@ public class MinimumMeetingRooms {
         // Create a min heap that holds meetings times by increasing end time.
         PriorityQueue<Meeting> minHeap = new PriorityQueue<>(meetings.size(), (a, b) -> Integer.compare(a.end, b.end));
 
+        // Iterate through all meetings.
         for (Meeting meeting : meetings) {
             // Remove all meetings that ended.
             while (!minHeap.isEmpty() && meeting.start >= minHeap.peek().end) {

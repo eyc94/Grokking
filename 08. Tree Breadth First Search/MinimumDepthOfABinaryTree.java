@@ -51,32 +51,44 @@ public class MinimumDepthOfABinaryTree {
     }
 
     public static int findDepth(TreeNode root) {
+        // If there is no tree, return 0.
+        if (root == null) {
+            return 0;
+        }
 
+        // Create a queue to hold the nodes to process.
         Queue<TreeNode> bfsQueue = new LinkedList<>();
+        // Add the root node.
         bfsQueue.offer(root);
+        // Initialize depth to 0. Keep track of depth.
         int depth = 0;
+
+        // Iterate while queue is not empty.
         while (!bfsQueue.isEmpty()) {
+            // For every iteration, we encounter a new level, so increment depth.
             depth++;
+            // Get the level size.
             int levelSize = bfsQueue.size();
-
+            // Iterate through the level size.
             for (int i = 0; i < levelSize; i++) {
-
+                // Get the first node in the queue.
                 TreeNode currentNode = bfsQueue.poll();
-
+                // If the node is a leaf node, return the depth immediately.
                 if (currentNode.left == null && currentNode.right == null) {
                     return depth;
                 }
 
+                // If the node has children, add to the queue.
                 if (currentNode.left != null) {
                     bfsQueue.offer(currentNode.left);
                 }
-
                 if (currentNode.right != null) {
                     bfsQueue.offer(currentNode.right);
                 }
             }
         }
 
+        // Return depth.
         return depth;
     }
 

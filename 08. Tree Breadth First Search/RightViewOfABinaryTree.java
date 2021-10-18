@@ -31,6 +31,17 @@ Output:         [12, 1, 5, 3]
 import java.util.*;
 
 public class RightViewOfABinaryTree {
+
+    /*
+     * This is easy. Same as before. When we iterate through level, check if the
+     * node is the last node of that level (i.e., i == levelSize - 1). Add the node
+     * to the result list.
+     * 
+     * Time Complexity: O(N) where 'N' is the number of nodes in our tree.
+     * 
+     * Space Complexity: O(N) because we need to store nodes in queue.
+     */
+
     // This is the TreeNode class.
     public static class TreeNode {
         int val;
@@ -45,21 +56,34 @@ public class RightViewOfABinaryTree {
     }
 
     public static List<TreeNode> traverse(TreeNode root) {
+        // List of right-end nodes to return.
         List<TreeNode> result = new ArrayList<>();
+        // If tree is empty, return null.
+        if (root == null) {
+            return result;
+        }
 
+        // Create a queue to hold nodes.
         Queue<TreeNode> bfsQueue = new LinkedList<>();
+        // Add the first node.
         bfsQueue.offer(root);
 
+        // Iterate while queue is not empty.
         while (!bfsQueue.isEmpty()) {
+            // Get the level size.
             int levelSize = bfsQueue.size();
 
+            // Iterate through the level size.
             for (int i = 0; i < levelSize; i++) {
+                // Grab the first node of our queue.
                 TreeNode current = bfsQueue.poll();
 
+                // If the node is the last node of our level, add it to result.
                 if (i == levelSize - 1) {
                     result.add(current);
                 }
 
+                // If there are children, add to queue.
                 if (current.left != null) {
                     bfsQueue.offer(current.left);
                 }
@@ -69,6 +93,7 @@ public class RightViewOfABinaryTree {
             }
         }
 
+        // Return results.
         return result;
     }
 

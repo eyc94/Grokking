@@ -27,6 +27,60 @@ public class ReverseEveryKElementSubList {
     }
 
     public static ListNode reverse(ListNode head, int k) {
+        if (k <= 1 || head == null) {
+            return head;
+        }
+
+        // Initialize prev to be null.
+        // Initialize curr to point to head.
+        ListNode prev = null;
+        ListNode curr = head;
+
+        // Keeps iterating until we reach the end of the LinkedList.
+        while (true) {
+
+            // Keep reference to the node before 'p'.
+            ListNode lastNodeBeforeP = prev;
+            // Keep reference to the 'curr' node. This node will be the last node after we
+            // reverse the sub-list of size 'k'.
+            ListNode lastNodeAfterReverse = curr;
+
+            // We reverse the nodes from position 'p' to position 'k'.
+            // The curr != null condition here allows us to stop reversing when the sub-list
+            // size is less than 'k'.
+            for (int i = 0; curr != null && i < k; i++) {
+                ListNode next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            // First check if position 'p - 1' is null.
+            // In other words, if we had to reverse the first node of our original list,
+            // there is no previous node before the first node.
+            // Point head to prev.
+            // If not, connect this node to the prev.
+            if (lastNodeBeforeP != null) {
+                lastNodeBeforeP.next = prev;
+            } else {
+                head = prev;
+            }
+
+            // The last node after we reverse needs to point to the next 'p' in the
+            // iteration to complete this link between the last node of the reversed
+            // sub-list to the next last node of the next sub-list of size 'k' or less.
+            lastNodeAfterReverse.next = curr;
+
+            // If the curr pointer is null (We reached the end of the LinkedList).
+            // Break.
+            if (curr == null) {
+                break;
+            }
+
+            // Otherwise, update the prev pointer to point to the node before the next
+            // sub-list to process.
+            prev = lastNodeAfterReverse;
+        }
         return head;
     }
 
@@ -56,7 +110,7 @@ public class ReverseEveryKElementSubList {
 
         // Reverse and print reversed LinkedList.
         ListNode result = reverse(head, 3);
-        System.out.println("LinkedList after reversing based on size: ");
+        System.out.println("LinkedList after reversing every 3 nodes: ");
         while (result != null) {
             if (result.next != null) {
                 System.out.print(result.value + " -> ");

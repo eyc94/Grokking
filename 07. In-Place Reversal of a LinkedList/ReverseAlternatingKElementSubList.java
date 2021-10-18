@@ -19,8 +19,21 @@ Explanation:    We see that we reverse every other sized-2 sub-lists.
 public class ReverseAlternatingKElementSubList {
 
     /*
-    
-    */
+     * What I'm doing here is the same as the previous code. We run the while loop
+     * until curr reaches the end of the LinkedList.
+     * 
+     * While we're looping, we use a boolean flag that indicates true or false to
+     * reverse or not reverse, respectively.
+     * 
+     * When the flag is true, we reverse the next 'k' nodes. When the flag is false,
+     * we skip the next 'k' nodes.
+     * 
+     * Once curr reaches the end of the LinkedList, we break out of the while loop.
+     * 
+     * Time Complexity: O(N) where N is the length of our LinkedList.
+     * 
+     * Space Complexity: O(1).
+     */
 
     // This is the ListNode class.
     public static class ListNode {

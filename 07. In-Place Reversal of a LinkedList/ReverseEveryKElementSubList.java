@@ -16,6 +16,37 @@ Explanation:    We reverse every size 3 sub-lists. The remaining nodes 7 and 8 a
 */
 
 public class ReverseEveryKElementSubList {
+
+    /*
+     * We basically keep reversing a sublist of size 'k' or less while we are still
+     * in our loop. So, while true, we will reverse every 'k' sized sub-lists.
+     * 
+     * We initialize our prev and curr pointers to the beginning of our loop. Once
+     * our while loop starts, we need a reference to the node before 'p', which is
+     * prev. We need a reference to the last node of the to-be reversed sub-list.
+     * 
+     * We then reverse the next 'k' nodes. Note the condition that curr != null.
+     * This handles the case where the sub-list we're reversing is less than 'k'.
+     * The curr pointer will reach null, and we stop.
+     * 
+     * The prev pointer will point to the new head of our reversed sub-list. We now
+     * have to point the node before 'p' to point to the prev node. If there is no
+     * node before 'p' (p is the first node of the list), we just point head to it.
+     * 
+     * Then, we need to point our last node of the reversed sub-list to the next
+     * to-be last node of the next to-be reversed sub-list. This is the curr
+     * pointer.
+     * 
+     * At this point, if curr is null, we finished iterating and we can break.
+     * Otherwise, we update prev to point to the last node of our reversed sub-list
+     * that we JUST reversed. This way, on the next iteration, it's before the next
+     * last node of the to-be reversed sub-list.
+     * 
+     * Time Complexity: O(N) where N is the length of the Linked List.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

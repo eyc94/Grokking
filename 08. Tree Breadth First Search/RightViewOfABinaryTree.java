@@ -47,6 +47,28 @@ public class RightViewOfABinaryTree {
     public static List<TreeNode> traverse(TreeNode root) {
         List<TreeNode> result = new ArrayList<>();
 
+        Queue<TreeNode> bfsQueue = new LinkedList<>();
+        bfsQueue.offer(root);
+
+        while (!bfsQueue.isEmpty()) {
+            int levelSize = bfsQueue.size();
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode current = bfsQueue.poll();
+
+                if (i == levelSize - 1) {
+                    result.add(current);
+                }
+
+                if (current.left != null) {
+                    bfsQueue.offer(current.left);
+                }
+                if (current.right != null) {
+                    bfsQueue.offer(current.right);
+                }
+            }
+        }
+
         return result;
     }
 

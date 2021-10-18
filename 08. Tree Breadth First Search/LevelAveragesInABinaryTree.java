@@ -27,6 +27,20 @@ Output:         [12.0, 4.0, 6.5]
 import java.util.*;
 
 public class LevelAveragesInABinaryTree {
+
+    /*
+     * This is the same code as before. Only difference is that we are return a list
+     * of doubles for the average of each level.
+     * 
+     * On each level iteration, we are just accumulating the sum of our level and
+     * dividing by the level's size. We then add this average to the list we return.
+     * 
+     * Time Complexity: O(N) where N is the number of nodes in our tree.
+     * 
+     * Space Complexity: O(N) because we need to store the averages in the result.
+     * We need to store the nodes in our queue as well.
+     */
+
     // This is the TreeNode class.
     public static class TreeNode {
         int val;
@@ -39,18 +53,28 @@ public class LevelAveragesInABinaryTree {
     }
 
     public static List<Double> findLevelAverages(TreeNode root) {
+        // List of averages to return.
         List<Double> result = new ArrayList<>();
 
+        // Create a queue to hold nodes for processing.
         Queue<TreeNode> bfsQueue = new LinkedList<>();
+        // Add the root node.
         bfsQueue.offer(root);
 
+        // Iterate while the queue is not empty.
         while (!bfsQueue.isEmpty()) {
+            // Get the level size by getting the queue size.
             int levelSize = bfsQueue.size();
+            // Initialize a sum to accumulate in the interval.
             double sum = 0.0;
+            // Iterate through the level size.
             for (int i = 0; i < levelSize; i++) {
+                // Get the first node.
                 TreeNode currentNode = bfsQueue.poll();
+                // Add the node's value to the sum.
                 sum += currentNode.val;
 
+                // If the node has children, add children to queue.
                 if (currentNode.left != null) {
                     bfsQueue.offer(currentNode.left);
                 }
@@ -58,10 +82,10 @@ public class LevelAveragesInABinaryTree {
                     bfsQueue.offer(currentNode.right);
                 }
             }
+            // Calculate the average of the current level and add to result list.
             double average = sum / levelSize;
             result.add(average);
         }
-
         return result;
     }
 

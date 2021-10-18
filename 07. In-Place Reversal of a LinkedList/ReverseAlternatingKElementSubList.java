@@ -28,6 +28,51 @@ public class ReverseAlternatingKElementSubList {
     }
 
     public static ListNode reverse(ListNode head, int k) {
+        if (k <= 1 || head == null) {
+            return head;
+        }
+
+        ListNode prev = null;
+        ListNode curr = head;
+        boolean reverse = true;
+
+        while (true) {
+            ListNode nodeBeforeP = prev;
+            ListNode lastNodeOfSubList = curr;
+
+            if (reverse) {
+                for (int i = 0; curr != null && i < k; i++) {
+                    ListNode next = curr.next;
+                    curr.next = prev;
+                    prev = curr;
+                    curr = next;
+                }
+
+                if (nodeBeforeP != null) {
+                    nodeBeforeP.next = prev;
+                } else {
+                    head = prev;
+                }
+
+                lastNodeOfSubList.next = curr;
+                if (curr == null) {
+                    break;
+                }
+                prev = lastNodeOfSubList;
+                reverse = false;
+            } else {
+                for (int i = 0; curr != null && i < k; i++) {
+                    curr = curr.next;
+                    prev = prev.next;
+                }
+                reverse = true;
+            }
+
+            if (curr == null) {
+                break;
+            }
+        }
+
         return head;
     }
 
@@ -41,6 +86,8 @@ public class ReverseAlternatingKElementSubList {
         head.next.next.next.next.next = new ListNode(6);
         head.next.next.next.next.next.next = new ListNode(7);
         head.next.next.next.next.next.next.next = new ListNode(8);
+        head.next.next.next.next.next.next.next.next = new ListNode(9);
+        head.next.next.next.next.next.next.next.next.next = new ListNode(10);
 
         // Print original LinkedList.
         ListNode scanner = head;
@@ -57,7 +104,7 @@ public class ReverseAlternatingKElementSubList {
 
         // Reverse and print reversed LinkedList.
         ListNode result = reverse(head, 2);
-        System.out.println("LinkedList after reversing every 3 nodes: ");
+        System.out.println("LinkedList after reversing every other sized-2 sub-list: ");
         while (result != null) {
             if (result.next != null) {
                 System.out.print(result.value + " -> ");

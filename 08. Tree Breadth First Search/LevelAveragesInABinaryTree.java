@@ -40,6 +40,28 @@ public class LevelAveragesInABinaryTree {
 
     public static List<Double> findLevelAverages(TreeNode root) {
         List<Double> result = new ArrayList<>();
+
+        Queue<TreeNode> bfsQueue = new LinkedList<>();
+        bfsQueue.offer(root);
+
+        while (!bfsQueue.isEmpty()) {
+            int levelSize = bfsQueue.size();
+            double sum = 0.0;
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode currentNode = bfsQueue.poll();
+                sum += currentNode.val;
+
+                if (currentNode.left != null) {
+                    bfsQueue.offer(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    bfsQueue.offer(currentNode.right);
+                }
+            }
+            double average = sum / levelSize;
+            result.add(average);
+        }
+
         return result;
     }
 

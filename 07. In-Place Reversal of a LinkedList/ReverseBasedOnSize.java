@@ -24,6 +24,27 @@ Explanation:    The LinkedList is odd, so reverse the first half (first 4), keep
 */
 
 public class ReverseBasedOnSize {
+
+    /*
+     * This is an easy problem. We use the code from ReverseASubList.java and use it
+     * as a helper function. The only thing different is that we have to find out
+     * the length of our LinkedList. We find it in the beginning.
+     * 
+     * If the length is even, we reverse 1 to n/2. We then reverse n/2 + 1 to n. The
+     * variable 'n' is the length of our LinkedList.
+     * 
+     * If the length is odd, we reverse 1 to n/2. We keep the middle the same. We
+     * reverse n/2 + 2 to n. It is n/2 + 2 because we skip over the middle.
+     * 
+     * We basically call our reverse helper function here with the parameters for
+     * 'p' and 'q'. The function is explained in my other code. Basically just
+     * reverse from 'p' to 'q'. We return the head of the reversed list.
+     * 
+     * Time Complexity: O(N) where N is the length of our LinkedList.
+     * 
+     * Space Complexity: O(1).
+     */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;

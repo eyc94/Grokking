@@ -41,6 +41,11 @@ public class ReverseLevelOrderTraversal {
      * insertion operations.
      * 
      * We also change the add() method by using another parameter.
+     * 
+     * Time Complexity: O(N) where N is the number of nodes in our tree.
+     * 
+     * Space Complexity: O(N) because of the list we return and the queue that holds
+     * at most N/2 nodes.
      */
 
     // This is the TreeNode class.

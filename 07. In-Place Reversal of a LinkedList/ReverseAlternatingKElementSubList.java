@@ -17,6 +17,11 @@ Explanation:    We see that we reverse every other sized-2 sub-lists.
 */
 
 public class ReverseAlternatingKElementSubList {
+
+    /*
+    
+    */
+
     // This is the ListNode class.
     public static class ListNode {
         int value = 0;
@@ -28,19 +33,27 @@ public class ReverseAlternatingKElementSubList {
     }
 
     public static ListNode reverse(ListNode head, int k) {
+        // If the sub-list size is just 1 or the list is empty, return the list.
         if (k <= 1 || head == null) {
             return head;
         }
 
+        // We initialize the prev and curr pointers for the first 'k' nodes.
         ListNode prev = null;
         ListNode curr = head;
+        // This is the flag that tells us whether we have to reverse or skip 'k' nodes.
         boolean reverse = true;
 
+        // Iterate while true until the curr pointer reaches null.
         while (true) {
+            // We update the node before the to-be last node of the to-be reversed sub-list.
             ListNode nodeBeforeP = prev;
+            // We update the last node of the next sub-list to-be reversed.
             ListNode lastNodeOfSubList = curr;
 
+            // If we have to reverse, we reverse.
             if (reverse) {
+                // Reverse the next 'k' nodes.
                 for (int i = 0; curr != null && i < k; i++) {
                     ListNode next = curr.next;
                     curr.next = prev;
@@ -48,31 +61,43 @@ public class ReverseAlternatingKElementSubList {
                     curr = next;
                 }
 
+                // If the node before 'p' is not null, connect this to the head of the reversed
+                // sub-list, prev. Otherwise, point head to it.
                 if (nodeBeforeP != null) {
                     nodeBeforeP.next = prev;
                 } else {
                     head = prev;
                 }
 
+                // Point the last node of the reversed sub-list to the next to-be last node of
+                // the next to-be reversed list.
                 lastNodeOfSubList.next = curr;
+
+                // After we finish linking, if curr reached the end, we break.
                 if (curr == null) {
                     break;
                 }
+
+                // Otherwise, update prev to point to the last node of the list we just
+                // reversed.
                 prev = lastNodeOfSubList;
+                // Set reverse flag to false, so we skip 'k' nodes on the next iteration.
                 reverse = false;
-            } else {
+            } else { // Otherwise, we skip.
+                // Skip the next 'k' nodes.
                 for (int i = 0; curr != null && i < k; i++) {
+                    prev = curr;
                     curr = curr.next;
-                    prev = prev.next;
                 }
+                // Set reverse flag to true for the next 'k' nodes.
                 reverse = true;
             }
 
+            // We break again if curr is null.
             if (curr == null) {
                 break;
             }
         }
-
         return head;
     }
 

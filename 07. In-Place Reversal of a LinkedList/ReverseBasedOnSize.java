@@ -35,6 +35,8 @@ public class ReverseBasedOnSize {
     }
 
     public static ListNode reverseBasedOnSize(ListNode head) {
+        // Count the nodes in our Linked List to perform reverse operations based on
+        // size.
         int length = 0;
         ListNode curr = head;
         while (curr != null) {
@@ -42,10 +44,15 @@ public class ReverseBasedOnSize {
             curr = curr.next;
         }
 
+        // If the length is even, we reverse the first half (1, n/2).
+        // We reverse the second half (n/2 + 1, n).
         if (length % 2 == 0) {
             head = reverse(head, 1, length / 2);
             head = reverse(head, length / 2 + 1, length);
         } else {
+            // If the length is odd, we reverse the first half (1, n/2).
+            // We keep the middle. We basically skip the middle.
+            // We reverse the second hald (n/2 + 2, n).
             head = reverse(head, 1, length / 2);
             head = reverse(head, length / 2 + 2, length);
         }
@@ -53,8 +60,9 @@ public class ReverseBasedOnSize {
         return head;
     }
 
+    // This is the helper function. This is basically the ReverseASubList code.
     public static ListNode reverse(ListNode head, int p, int q) {
-        // Reverse p to q.
+        // Reverse position p to q.
 
         // Skip 'p - 1' nodes.
         ListNode prev = null;
@@ -64,9 +72,13 @@ public class ReverseBasedOnSize {
             curr = curr.next;
         }
 
+        // Keep track of the node at position 'p - 1' before 'p'.
         ListNode nodeBeforeP = prev;
+        // Keep track of the last node of our sublist after reversing.
+        // This is basically position 'p'.
         ListNode lastNodeOfSubList = curr;
 
+        // We reverse 'p' to 'q'.
         for (int i = 0; curr != null && i < q - p + 1; i++) {
             ListNode next = curr.next;
             curr.next = prev;
@@ -74,13 +86,18 @@ public class ReverseBasedOnSize {
             curr = next;
         }
 
+        // If there was no node before 'p'. 'p - 1' is null.
+        // So just point our head to the head of the reversed sub-list, prev.
+        // If it's not null, point that node to the head of the reversed sub-list, prev.
         if (nodeBeforeP != null) {
             nodeBeforeP.next = prev;
         } else {
             head = prev;
         }
 
+        // Point the last node of the reversed sub-list to 'q + 1'.
         lastNodeOfSubList.next = curr;
+        // Return the head of our reversed list.
         return head;
     }
 

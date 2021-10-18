@@ -109,6 +109,6 @@ public class ReverseLevelOrderTraversal {
         root.right.left = new TreeNode(10);
         root.right.right = new TreeNode(5);
         List<List<Integer>> result = traverse(root);
-        System.out.println("Level order traversal: " + result);
+        System.out.println("Reverse level order traversal: " + result);
     }
 }

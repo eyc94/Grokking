@@ -39,6 +39,22 @@ Output:         3
 import java.util.*;
 
 public class MinimumDepthOfABinaryTree {
+
+    /*
+     * We basically use the same BFS code. The only thing is is that we keep track
+     * of the depth at every iteration. Every iteration of the while loop is a level
+     * of the tree. We iterate our depth at the beginning of each while loop.
+     * 
+     * When we encounter a leaf node (left and right pointers are null), we
+     * immediately return the depth.
+     * 
+     * Otherwise, we add the children to the queue and continue iteration.
+     * 
+     * Time Complexity: O(N) where N is the number of nodes in the tree.
+     * 
+     * Space Complexity: O(N) because we need to store nodes in queue.
+     */
+
     // This is the TreeNode class.
     public static class TreeNode {
         int val;

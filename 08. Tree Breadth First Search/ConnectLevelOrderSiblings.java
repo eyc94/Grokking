@@ -25,6 +25,8 @@ Input:     12
 Output:         [[12], [7, 1], [9, 10, 5]]
 */
 
+import java.util.*;
+
 public class ConnectLevelOrderSiblings {
     // This is the TreeNode class.
     public static class TreeNode {
@@ -60,6 +62,30 @@ public class ConnectLevelOrderSiblings {
     }
 
     public static void connect(TreeNode root) {
+
+        Queue<TreeNode> bfsQueue = new LinkedList<>();
+        bfsQueue.offer(root);
+
+        while (!bfsQueue.isEmpty()) {
+            int levelSize = bfsQueue.size();
+
+            TreeNode prev = null;
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode current = bfsQueue.poll();
+
+                if (prev != null) {
+                    prev.next = current;
+                }
+                prev = current;
+
+                if (current.left != null) {
+                    bfsQueue.offer(current.left);
+                }
+                if (current.right != null) {
+                    bfsQueue.offer(current.right);
+                }
+            }
+        }
 
     }
 

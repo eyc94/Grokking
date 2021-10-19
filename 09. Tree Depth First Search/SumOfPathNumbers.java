@@ -40,7 +40,22 @@ public class SumOfPathNumbers {
     }
 
     public static int findSumOfPathNumbers(TreeNode root) {
-        return -1;
+        return findRootToLeafPathNumbers(root, 0);
+    }
+
+    public static int findRootToLeafPathNumbers(TreeNode currentNode, int pathSum) {
+        if (currentNode == null) {
+            return 0;
+        }
+
+        pathSum = 10 * pathSum + currentNode.val;
+
+        if (currentNode.left == null && currentNode.right == null) {
+            return pathSum;
+        }
+
+        return findRootToLeafPathNumbers(currentNode.left, pathSum)
+                + findRootToLeafPathNumbers(currentNode.right, pathSum);
     }
 
     public static void main(String[] args) {

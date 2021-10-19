@@ -26,7 +26,7 @@ Input:      12
          /    / \
         4    10  5
 
-Output1:        3
+Output:        3
 Explanation:    12 -> 7 -> 4
                 12 -> 1 -> 10
                 12 -> 1 -> 5

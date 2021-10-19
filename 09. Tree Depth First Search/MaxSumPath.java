@@ -23,7 +23,7 @@ Input:      12
          /    / \
         6    10  5
 
-Output1:        25
+Output:        25
 Explanation:    12 -> 7 -> 6
 */
 

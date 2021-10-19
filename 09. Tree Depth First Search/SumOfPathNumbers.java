@@ -23,7 +23,7 @@ Input:      1
          /   / \
         1    6  5
 
-Output1:        332
+Output:        332
 Explanation:    The sum of all path numbers: 101 + 116 + 115 = 332.
 */
 

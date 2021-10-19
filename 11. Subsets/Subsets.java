@@ -21,6 +21,18 @@ public class Subsets {
     public static List<List<Integer>> findSubsets(int[] nums) {
         List<List<Integer>> subsets = new ArrayList<>();
 
+        subsets.add(new ArrayList<>());
+
+        for (int currentNumber : nums) {
+            int n = subsets.size();
+            for (int i = 0; i < n; i++) {
+                List<Integer> set = new ArrayList<>(subsets.get(i));
+                System.out.println(set);
+                set.add(currentNumber);
+                subsets.add(set);
+            }
+        }
+
         return subsets;
     }
 
